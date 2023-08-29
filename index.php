@@ -265,6 +265,7 @@ if (isset($_POST["search_btn"])) {
                             <td class="text-center" colspan="9"><b>Jumlah Total</b></td>
                             <td class="text-center">Rp. <?= $format_jumBiaya; ?></td>
                             <td class="text-center"></td>
+                            <td class="text-center"></td>
                         </tr>
                     </tbody>
                 </table>
