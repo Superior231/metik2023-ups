@@ -33,6 +33,30 @@ if (isset($_POST["tambah_btn"])) {
     }
 }
 
+
+// Cek apakah tombol edit sudah ditekan atau belum
+if (isset($_POST["edit_btn"])) {
+
+
+    // Cek apakah data berhasil diubah atau tidak
+    if (edit($_POST) > 0) {
+        echo "
+          <script>
+              alert('Data berhasil diubah');
+              document.location.href = ''
+          </script>
+      ";
+    } else {
+        echo "
+          <script>
+              alert('Data gagal diubah!');
+              document.location.href = 'admin.php#anggaran'
+          </script>
+      ";
+    }
+}
+
+
 // Tombol search ditekan
 if (isset($_POST["search_btn"])) {
     $riwayat_pembayaran = search($_POST["keyword"]);
@@ -226,7 +250,7 @@ if (isset($_POST["search_btn"])) {
                                 <div class="input-group flex-nowrap">
                                     <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="Username" aria-describedby="addon-wrapping">
                                 </div>
-                            
+
                                 <label for="type" class="mt-2">Type</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-venus-mars icon"></i></span>
@@ -336,7 +360,8 @@ if (isset($_POST["search_btn"])) {
                         <?php foreach ($riwayat_pembayaran as $row) : ?>
                             <tr>
                                 <td class="text-center">
-                                    <a href="anggaranedit.php?id=<?= $row["id"]; ?>" class="link"><i class="fa fa-pencil"></i></a> |
+                                    <button style="border-color: transparent;" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $row['id']; ?>"><i class="fa fa-pencil"></i></button>
+                                    <a href="anggaranedit.php?id=<?= $row["id"]; ?>" class="link"></a> |
                                     <a href="anggaranhapus.php?id=<?= $row["id"]; ?>" class="link" onclick="return confirm('Apakah Anda yakin untuk menghapusnya?');"><i class="fa-solid fa-trash"></i></a>
                                 </td>
                                 <td class="text-center"><?= $row["jenis_belanja"]; ?></td>
@@ -350,13 +375,112 @@ if (isset($_POST["search_btn"])) {
                                 <td class="text-start">&nbsp; <?= "Rp. " . number_format($row["harga_satuan"], 0, ',', '.'); ?></td>
                                 <td class="text-start">&nbsp; <?= "Rp. " . number_format($row["jml_anggaran"], 0, ',', '.'); ?></td>
                                 <td class="text-center"><?= $row["date"]; ?></td>
-                                <td class="text-center"><button class="btn btn-secondary">Lihat</button></td>
+                                <td class="text-center"><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#kwitansiModal<?php echo $row['id']; ?>">Lihat</button></td>
                             </tr>
+
+                            <!-- Modal Edit Data Pembayaran -->
+                            <form action="admin.php" method="post" enctype="multipart/form-data">
+                                <div class="modal fade" id="editModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <input type="hidden" name="id" value="<?= $row['id'];?>">
+                                                <input type="hidden" name="gambarLama" value="<?= $row['gambar'];?>">
+
+                                                <label for="gambar" class="">Bukti pembayaran</label>
+                                                <div class="input-group flex-nowrap">
+                                                    <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="Username" aria-describedby="addon-wrapping">
+                                                </div>
+
+                                                <label for="type" class="mt-2">Type</label>
+                                                <div class="input-group flex-nowrap">
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-venus-mars icon"></i></span>
+                                                    <select class="form-select" aria-label="Default select example" name="type" id="type" required>
+                                                        <option selected value="<?= $row['type'];?>">Select type</option>
+                                                        <option value="Acara">Acara</option>
+                                                        <option value="Konsumsi">Konsumsi</option>
+                                                        <option value="Perkap">Perkap</option>
+                                                        <option value="Lain - lain">Lain - lain</option>
+                                                    </select>
+                                                </div>
+
+                                                <label for="jenis_belanja" class="mt-2">Nama Belanja</label>
+                                                <div class="input-group flex-nowrap">
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                                    <input type="text" name="jenis_belanja" id="jenis_belanja" class="form-control" placeholder="Nama belanja" aria-label="jenis_belanja" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["jenis_belanja"]; ?>">
+                                                </div>
+
+                                                <label for="harga_satuan" class="mt-2">Harga satuan</label>
+                                                <div class="input-group flex-nowrap">
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                                    <input type="text" name="harga_satuan" id="harga_satuan" class="form-control" placeholder="Rp. " aria-label="harga_satuan" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["harga_satuan"]; ?>">
+                                                </div>
+
+                                                <label for="volume_vol" class="mt-2">Volume</label>
+                                                <div class="input-group flex">
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-list-ol"></i></span>
+                                                    <input type="text" name="volume_vol" id="volume_vol" class="form-control me-2" placeholder="Vol : 1, 2, 3,..." aria-label="volume_vol" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["volume_vol"]; ?>">
+
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-scroll"></i></span>
+                                                    <input type="text" name="volume_sat" id="volume_sat" class="form-control" placeholder="Satuan : Lembar, Box, Buah" aria-label="volume_sat" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["volume_sat"]; ?>">
+                                                </div>
+
+                                                <label for="frekuensi_vol" class="mt-2">Frekuensi</label>
+                                                <div class="input-group flex">
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-list-ol"></i></span>
+                                                    <input type="text" name="frekuensi_vol" id="frekuensi_vol" class="form-control me-2" placeholder="Vol : 1, 2, 3,..." aria-label="frekuensi_vol" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["frekuensi_vol"]; ?>">
+
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-scroll"></i></span>
+                                                    <input type="text" name="frekuensi_sat" id="frekuensi_sat" class="form-control" placeholder="Satuan : Kali, Kegiatan" aria-label="frekuensi_sat" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["frekuensi_sat"]; ?>">
+                                                </div>
+
+                                                <label for="date" class="mt-2">Date</label>
+                                                <div class="input-group">
+                                                    <input type="date" name="date" id="date" class="form-control" aria-label="date" aria-describedby="addon-wrapping" value="<?= $row["date"]; ?>">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="submit" name="edit_btn" class="btn btn-primary btn-edit">Edit data</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- Modal Edit Data Pembayaran End -->
+
+                            <!-- Modal Bukti Pembayaran -->
+                            <div class="modal fade" id="kwitansiModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img class="img mx-auto d-block" src="../img/<?php echo $row["gambar"]; ?>" style="width: 60%;">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Download</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Bukti Pembayaran End -->
                         <?php endforeach; ?>
                         <?php $i++; ?>
                         <tr>
                             <td class="text-center" colspan="10"><b>Jumlah Total</b></td>
                             <td class="text-center">Rp. <?= $format_jumBiaya; ?></td>
+                            <td class="text-center"></td>
                             <td class="text-center"></td>
                         </tr>
                     </tbody>

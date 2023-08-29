@@ -6,7 +6,7 @@ $riwayat_pembayaran = mysqli_query($db, "SELECT * FROM riwayat_pembayaran");
 
 
 // Tombol search ditekan
-if( isset($_POST["search_btn"]) ) {
+if (isset($_POST["search_btn"])) {
     $riwayat_pembayaran = search($_POST["keyword"]);
 }
 
@@ -164,7 +164,7 @@ if( isset($_POST["search_btn"]) ) {
             <!-- Actions -->
             <div class="actions mb-2">
                 <a href=""><button type="button" style="background: transparent; border-color: transparent;"><i class="fa-solid fa-rotate-right fa-2x text-light"></i></button></a>
-                
+
                 <!-- Search -->
                 <form action="" method="post" class="search mx-0 ms-auto d-flex">
                     <div class="input-group">
@@ -187,6 +187,7 @@ if( isset($_POST["search_btn"]) ) {
                             <th class="text-center" colspan="7">Rincian Biaya</th>
                             <th class="text-center" rowspan="2" style="vertical-align: middle;">Jumlah Anggaran</th>
                             <th class="text-center" rowspan="4" style="vertical-align: middle;">Update at</th>
+                            <th class="text-center" rowspan="4" style="vertical-align: middle;">Kwitansi</th>
                         </tr>
                         <tr>
                             <th class="text-center" colspan="2">Volume</th>
@@ -235,8 +236,30 @@ if( isset($_POST["search_btn"]) ) {
                                 <td class="text-start">&nbsp; <?= "Rp. " . number_format($row["harga_satuan"], 0, ',', '.'); ?></td>
                                 <td class="text-start">&nbsp; <?= "Rp. " . number_format($row["jml_anggaran"], 0, ',', '.'); ?></td>
                                 <td class="text-center"><?= $row["date"]; ?></td>
+                                <td class="text-center"><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $row['id']; ?>">Lihat</button></td>
                             </tr>
-                            <?php $i++; ?>
+
+                            <!-- Modal Bukti Pembayaran -->
+                            <div class="modal fade" id="exampleModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img class="img mx-auto d-block" src="img/<?php echo $row["gambar"]; ?>" style="width: 60%;">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Download</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Bukti Pembayaran End -->
+
+                        <?php $i++; ?>
                         <?php endforeach; ?>
                         <tr>
                             <td class="text-center" colspan="9"><b>Jumlah Total</b></td>
@@ -246,6 +269,7 @@ if( isset($_POST["search_btn"]) ) {
                     </tbody>
                 </table>
             </div>
+
 
         </div>
     </div>

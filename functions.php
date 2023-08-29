@@ -166,8 +166,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 
 // Tambah data
-function tambah($data)
-{
+function tambah($data) {
     global $db;
 
     // htmlspecialchars supaya artibut html tidak jalan di input user
@@ -183,19 +182,24 @@ function tambah($data)
     $perhitungan = $frekuensi_vol * $volume_vol;
     $anggaran = $perhitungan * $harga_satuan;
 
-	// Upload gambar
-	$gambar = upload();
-	if( !$gambar) {
-		return false;
+	// Cek apakah admin upload gambar / tidak
+	if( $_FILES['gambar']['error'] === 4 ) {
+		// INSERT INTO fungsinya buat nambah data
+		$query = "INSERT INTO riwayat_pembayaran
+				  VALUES ('', '$type', '$jenis_belanja', '$volume_vol', '$volume_sat', '$frekuensi_vol', '$frekuensi_sat', '$perhitungan', '$volume_sat', '$harga_satuan', '$anggaran', '$date', 'kwitansi.jpg')";
+	
+		mysqli_query($db, $query);
+		return mysqli_affected_rows($db);
+	} else {
+		$gambar = upload();
+
+		$query = "INSERT INTO riwayat_pembayaran
+				  VALUES ('', '$type', '$jenis_belanja', '$volume_vol', '$volume_sat', '$frekuensi_vol', '$frekuensi_sat', '$perhitungan', '$volume_sat', '$harga_satuan', '$anggaran', '$date', '$gambar')";
+	
+		mysqli_query($db, $query);
+		return mysqli_affected_rows($db);
 	}
 
-    // INSERT INTO fungsinya buat nambah data
-    $query = "INSERT INTO riwayat_pembayaran
-              VALUES ('', '$type', '$jenis_belanja', '$volume_vol', '$volume_sat', '$frekuensi_vol', '$frekuensi_sat', '$perhitungan', '$volume_sat', '$harga_satuan', '$anggaran', '$date', '$gambar')";
-
-    mysqli_query($db, $query);
-
-    return mysqli_affected_rows($db);
 }
 // Tambah data End
 
