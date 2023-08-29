@@ -62,8 +62,16 @@ if (isset($_POST["edit_btn"])) {
                     <h2 class="card-title">Edit data</h2>
 
                     <!-- form registrasi bs5 -->
-                    <form action="" method="post">
+                    <form action="anggaranedit.php" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="<?= $editDataPembayaran["id"]; ?>">
+                        <input type="hidden" name="gambarLama" value="<?= $editDataPembayaran["gambar"] ?>">
+                        
+                        
+                        <label for="gambar" class="mt-4">Bukti pembayaran</label>
+                        <div class="input-group flex-nowrap">
+                            <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="Username" aria-describedby="addon-wrapping">
+                        </div>
+
                         <label for="type" class="form-label">Type</label>
                         <div class="input-group flex-nowrap">
                             <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-venus-mars icon"></i></span>

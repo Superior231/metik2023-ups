@@ -212,7 +212,7 @@ if (isset($_POST["search_btn"])) {
 
 
             <!-- Modal Tambah Data Pembayaran -->
-            <form action="" method="post">
+            <form action="admin.php" method="post" enctype="multipart/form-data">
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -222,6 +222,11 @@ if (isset($_POST["search_btn"])) {
                             </div>
 
                             <div class="modal-body">
+                                <label for="gambar" class="">Bukti pembayaran</label>
+                                <div class="input-group flex-nowrap">
+                                    <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="Username" aria-describedby="addon-wrapping">
+                                </div>
+                            
                                 <label for="type" class="mt-2">Type</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-venus-mars icon"></i></span>
@@ -292,6 +297,7 @@ if (isset($_POST["search_btn"])) {
                             <th class="text-center" colspan="7">Rincian Biaya</th>
                             <th class="text-center" rowspan="2" style="vertical-align: middle;">Jumlah Anggaran</th>
                             <th class="text-center" rowspan="4" style="vertical-align: middle;">Update at</th>
+                            <th class="text-center" rowspan="4" style="vertical-align: middle;">Kwitansi</th>
                         </tr>
                         <tr>
                             <th class="text-center" colspan="2">Volume</th>
@@ -344,6 +350,7 @@ if (isset($_POST["search_btn"])) {
                                 <td class="text-start">&nbsp; <?= "Rp. " . number_format($row["harga_satuan"], 0, ',', '.'); ?></td>
                                 <td class="text-start">&nbsp; <?= "Rp. " . number_format($row["jml_anggaran"], 0, ',', '.'); ?></td>
                                 <td class="text-center"><?= $row["date"]; ?></td>
+                                <td class="text-center"><button class="btn btn-secondary">Lihat</button></td>
                             </tr>
                         <?php endforeach; ?>
                         <?php $i++; ?>
@@ -363,7 +370,7 @@ if (isset($_POST["search_btn"])) {
 
     <!-- TOASTS -->
     <?php
-    // Simulasi berhasil login
+    // Jika user berhasil login
     $loggedIn = true;
 
     if ($loggedIn && !isset($_SESSION['loginToastShown'])) {
@@ -381,6 +388,14 @@ if (isset($_POST["search_btn"])) {
             </div>
         </div>
         <!-- End Toast -->
+
+        <script>
+            // Menampilkan toast setelah halaman selesai dimuat
+            window.onload = function() {
+                var toast = new bootstrap.Toast(document.getElementById("loginToast"));
+                toast.show();
+            };
+        </script>
         ';
     }
     ?>
@@ -390,13 +405,6 @@ if (isset($_POST["search_btn"])) {
     <script src="../script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <script>
-        // Menampilkan toast setelah halaman selesai dimuat
-        window.onload = function() {
-            var toast = new bootstrap.Toast(document.getElementById('loginToast'));
-            toast.show();
-        };
-    </script>
 
 </body>
 

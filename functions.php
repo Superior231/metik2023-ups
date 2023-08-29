@@ -183,23 +183,85 @@ function tambah($data)
     $perhitungan = $frekuensi_vol * $volume_vol;
     $anggaran = $perhitungan * $harga_satuan;
 
-    // INSERT INTO fungsinya buat nambah data
-    $a = "INSERT INTO riwayat_pembayaran
-              VALUES ('', '$type', '$jenis_belanja', '$volume_vol', '$volume_sat', '$frekuensi_vol', '$frekuensi_sat', '$perhitungan', '$volume_sat', '$harga_satuan', '$anggaran', '$date')";
+	// Upload gambar
+	$gambar = upload();
+	if( !$gambar) {
+		return false;
+	}
 
-    mysqli_query($db, $a);
+    // INSERT INTO fungsinya buat nambah data
+    $query = "INSERT INTO riwayat_pembayaran
+              VALUES ('', '$type', '$jenis_belanja', '$volume_vol', '$volume_sat', '$frekuensi_vol', '$frekuensi_sat', '$perhitungan', '$volume_sat', '$harga_satuan', '$anggaran', '$date', '$gambar')";
+
+    mysqli_query($db, $query);
 
     return mysqli_affected_rows($db);
 }
 // Tambah data End
 
 
+// Upload Gambar
+function upload() {
+	$namaFile   = $_FILES['gambar']['name'];
+	$ukuranFile = $_FILES['gambar']['size'];
+	$error      = $_FILES['gambar']['error'];
+	$tmpName    = $_FILES['gambar']['tmp_name'];
+
+	// Cek ukuran file || max size 10 mb
+	if( $ukuranFile > 10000000 ) {
+		echo "<script>
+                alert('Ukuran gambar terlalu besar!');
+              </script>";
+        return false;
+	}
+
+	// cek apakah yang diupload gambar atau bukan
+	// explode = memecah sebuah string menjadi array || memcahnya menggunakan delimiter '.'
+	$ekstensiGambarValid = ['jpg', 'jpeg', 'png'];
+	$ekstensiGambar      = explode('.', $namaFile);
+	$ekstensiGambar		 = strtolower(end($ekstensiGambar));
+	if( !in_array($ekstensiGambar ,$ekstensiGambarValid) ) {
+		echo "<script>
+                alert('Data gagal diubah!');
+				document.location.href = ''
+              </script>";
+        return false;
+	}
+
+
+
+	// Lolos pengecekan gambar siap diupload
+	// Buat nama file baru agar nama file tidak ada yang sama
+	$namaFileBaru  = uniqid();
+	$namaFileBaru .= '.';
+	$namaFileBaru .= $ekstensiGambar;
+
+	move_uploaded_file($tmpName, '../img/' . $namaFileBaru);
+
+	return $namaFileBaru;
+}
+// Upload Gambar End
+
+
 // Hapus data Anggaran
 function hapus($id) {
     global $db;
-    $hapus = "DELETE FROM riwayat_pembayaran WHERE id = $id";
+    $query = "SELECT gambar FROM riwayat_pembayaran WHERE id = $id";
+	$result = mysqli_query($db, $query);
+	$row = mysqli_fetch_assoc($result);
+	$gambarPath = '../img/' . $row['gambar'];
 
+	// hapus data berdasarkan id
+	$hapus = "DELETE FROM riwayat_pembayaran WHERE id = $id";
     mysqli_query($db, $hapus);
+
+	// Menghapus file fisik jika ada
+    if (file_exists($gambarPath)) {
+        unlink($gambarPath);
+        echo "File berhasil dihapus.";
+    } else {
+        echo "File tidak ditemukan.";
+    }
 
     return mysqli_affected_rows($db);
 }
@@ -220,9 +282,17 @@ function edit($data) {
     $frekuensi_sat  = htmlspecialchars($data["frekuensi_sat"]);
     $harga_satuan   = htmlspecialchars($data["harga_satuan"]);
     $date           = htmlspecialchars($data["date"]);
+	$gambarLama     = htmlspecialchars($data["gambarLama"]);
 
     $perhitungan = $frekuensi_vol * $volume_vol;
     $anggaran = $perhitungan * $harga_satuan;
+
+	// Cek apakah user pilih gambar baru atau tidak || 4 = user tidak upload gambar baru
+	if( $_FILES['gambar']['error'] === 4 ) {
+		$gambar = $gambarLama;
+	} else {
+		$gambar = upload();
+	}
 
 
     $query = "UPDATE riwayat_pembayaran SET
@@ -235,7 +305,8 @@ function edit($data) {
                 perhitungan   = '$perhitungan',
                 harga_satuan  = '$harga_satuan',
                 jml_anggaran  = '$anggaran',
-                date          = '$date'
+                date          = '$date',
+				gambar        = '$gambar'
 			  WHERE id 	= $id
 			";
 
