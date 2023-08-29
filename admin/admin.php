@@ -57,6 +57,21 @@ if (isset($_POST["edit_btn"])) {
 }
 
 
+// PAGINATION
+$jumlahDataPerHalaman = 10;
+
+$jumlahData = count(query("SELECT * FROM riwayat_pembayaran"));
+
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+
+$page = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+$awalData = ($jumlahDataPerHalaman * $page) - $jumlahDataPerHalaman;
+
+
+$riwayat_pembayaran = query("SELECT * FROM riwayat_pembayaran LIMIT $awalData, $jumlahDataPerHalaman");
+// PAGINATION END
+
+
 // Tombol search ditekan
 if (isset($_POST["search_btn"])) {
     $riwayat_pembayaran = search($_POST["keyword"]);
@@ -218,8 +233,21 @@ if (isset($_POST["search_btn"])) {
 
             <!-- Actions -->
             <div class="actions mb-2">
+                <!-- <div class="show d-flex text-light" style="height: 35px;">
+                    <span class="me-2 my-auto">Show</span>
+                    <div class="input-group flex-nowrap">
+                        <select class="form-select" aria-label="Default select example" name="show" id="show">
+                            <option selected value="5">5</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+                </div> -->
+
                 <button type="button" style="background: transparent; border-color: transparent;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-square-plus fa-2x text-light"></i></button>
-                <a href=""><button type="button" style="background: transparent; border-color: transparent;"><i class="fa-solid fa-rotate-right fa-2x text-light"></i></button></a>
+                <a href="admin.php"><button type="button" style="background: transparent; border-color: transparent;"><i class="fa-solid fa-rotate-right fa-2x text-light"></i></button></a>
 
                 <!-- Search -->
                 <form action="" method="post" class="search mx-0 ms-auto">
@@ -389,8 +417,8 @@ if (isset($_POST["search_btn"])) {
                                             </div>
 
                                             <div class="modal-body">
-                                                <input type="hidden" name="id" value="<?= $row['id'];?>">
-                                                <input type="hidden" name="gambarLama" value="<?= $row['gambar'];?>">
+                                                <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                                                <input type="hidden" name="gambarLama" value="<?= $row['gambar']; ?>">
 
                                                 <label for="gambar" class="">Bukti pembayaran</label>
                                                 <div class="input-group flex-nowrap">
@@ -401,7 +429,7 @@ if (isset($_POST["search_btn"])) {
                                                 <div class="input-group flex-nowrap">
                                                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-venus-mars icon"></i></span>
                                                     <select class="form-select" aria-label="Default select example" name="type" id="type" required>
-                                                        <option selected value="<?= $row['type'];?>">Select type</option>
+                                                        <option selected value="<?= $row['type']; ?>">Select type</option>
                                                         <option value="Acara">Acara</option>
                                                         <option value="Konsumsi">Konsumsi</option>
                                                         <option value="Perkap">Perkap</option>
@@ -487,6 +515,38 @@ if (isset($_POST["search_btn"])) {
                 </table>
             </div>
 
+            <!-- Tombol Pagination -->
+            <div class="pagination gap-1" style="overflow-x: scroll;">
+                <!-- menambah tombol previous -->
+                <?php if ($page > 1) : ?>
+                    <a href="?halaman=<?= $page - 1 ?>"><button type="button" class="btn btn-secondary"><i class="fa-solid fa-angle-left"></i></button></a>
+                <?php endif; ?>
+
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group gap-1" role="group" aria-label="Second group">
+
+                        <!-- Tombol halaman navigasi / pagination -->
+                        <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+
+                            <!-- untuk mengetahui kita berada di halaman berapa -->
+                            <?php if ($i == $page) : ?>
+                                <a href="?halaman=<?= $i; ?>"><button type="button" class="btn btn-primary" style="width: 38px;"><?= $i; ?></button></a>
+                            <?php else : ?>
+                                <a href="?halaman=<?= $i; ?>"><button type="button" class="btn btn-secondary" style="width: 38px;"><?= $i; ?></button></a>
+                            <?php endif; ?>
+
+                        <?php endfor; ?>
+                        <!-- Tombol halaman navigasi / pagination End -->
+
+                    </div>
+                </div>
+                <!-- menambah tombol next -->
+                <?php if ($page < $jumlahHalaman) : ?>
+                    <a href="?halaman=<?= $page + 1 ?>"><button type="button" class="btn btn-secondary"><i class="fa-solid fa-angle-right"></i></button></a>
+                <?php endif; ?>
+            </div>
+            <!-- Tombol Pagination End -->
+
         </div>
     </div>
     <!-- Banner 4 - Anggaran End -->
@@ -528,6 +588,7 @@ if (isset($_POST["search_btn"])) {
 
     <script src="../script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 
 
 </body>
