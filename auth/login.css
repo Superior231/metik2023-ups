@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+    background-image: url(../assets/bg-login.svg);
+    background-size: cover;
+    background-position: center;
+}
+.container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+label {
+    color: #ffffffd5;
+}
+
+.card.login-form {
+  padding: 13px 1%;
+  background-color: transparent;
+  border: none;
+  border-radius: 2px;
+}
+
+.btn-login {
+  height: 35px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+#logo-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pass-logo {
+  position: absolute;
+  height: 35px;
+  width: 38px;
+  background: transparent;
+  line-height: 35px;
+  font-size: 15px;
+  text-align: center;
+  border-radius: 3px 0 0 3px;
+  border: 1px;
+  padding-top: 2px;
+}
+
+.content input {
+  height: 100%;
+  width: 100%;
+  border: 1px solid #ffffff7c;
+  color: #ffffffd5;
+  border-radius: 2px;
+  padding-left: 45px;
+  outline: none;
+  background: transparent;
+}
+
+.content .pass-logo i.bx {
+    color: #ffffffc0;
+}
+
+input.form-control:focus {
+  box-shadow: 0 0 0 1px #257cc4;
+  background: transparent;
+  color: #fff;
+}
+
+.back {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
