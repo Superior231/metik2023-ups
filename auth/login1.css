@@ -65,6 +65,39 @@ label {
   padding-top: 2px;
 }
 
+.pass-logo-pass {
+  position: absolute;
+  height: 35px;
+  width: 38px;
+  background: transparent;
+  line-height: 32px;
+  font-size: 15px;
+  text-align: center;
+  border-radius: 3px 0 0 3px;
+  border: 1px;
+  padding-top: 2px;
+  margin-left: 85%;
+}
+@media (max-width: 300px) {
+  .pass-logo-pass {
+    position: absolute;
+    height: 35px;
+    width: 38px;
+    background: transparent;
+    line-height: 32px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 3px 0 0 3px;
+    border: 1px;
+    padding-top: 2px;
+    margin-left: 81%;
+  }
+}
+.pass-logo-pass button {
+  background-color: transparent;
+  border-color: transparent;
+}
+
 .content input {
   height: 100%;
   width: 100%;
@@ -75,8 +108,12 @@ label {
   outline: none;
   background: transparent;
 }
+.content input#password {
+  padding-right: 45px;
+}
 
-.content .pass-logo i.bx {
+.content .pass-logo i.bx,
+.content .pass-logo-pass  i.fa-regular {
     color: #ffffffc0;
 }
 
