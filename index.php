@@ -335,6 +335,11 @@ if (isset($_POST["search_btn"])) {
                                 <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Volume vol (3) dengan Frekuensi vol (5).</span></td>
                             </tr>
                             <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
                                 <td><span class="text-light"><b style="color: red;">**</b></span></td>
                                 <td>&nbsp;</td>
                                 <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Perhitungan (7) dengan Harga satuan (9).</span></td>
