@@ -339,6 +339,7 @@ if (isset($_POST["search_btn"])) {
             <!-- Modal Tambah Data Pembayaran End -->
 
 
+            <!-- Table -->
             <div class="table-responsive">
                 <table class="table table-hover table-striped bg-light table-bordered table-sm">
                     <thead class="table-color">
@@ -383,7 +384,8 @@ if (isset($_POST["search_btn"])) {
                             <td class="text-center"></td>
                         </tr>
                     </thead>
-                    <tbody>
+
+                    <tbody class="align-middle">
                         <?php $i = 1; ?>
                         <?php foreach ($riwayat_pembayaran as $row) : ?>
                             <tr>
@@ -497,7 +499,7 @@ if (isset($_POST["search_btn"])) {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Download</button>
+                                            <a href="../download_image.php?filename=<?php echo $row['gambar']; ?>" class="btn btn-primary">Download</a>
                                         </div>
                                     </div>
                                 </div>
@@ -514,6 +516,8 @@ if (isset($_POST["search_btn"])) {
                     </tbody>
                 </table>
             </div>
+            <!-- Table End -->
+
 
             <!-- Tombol Pagination -->
             <div class="pagination gap-1" style="overflow-x: scroll;">
@@ -547,7 +551,32 @@ if (isset($_POST["search_btn"])) {
             </div>
             <!-- Tombol Pagination End -->
 
+            <!-- Information -->
+            <div class="informations mt-5">
+                <div class="container-information">
+                    <h4 class="text-light mb-3">Keterangan</h4>
+                    <table>
+                        <tbody class="align-top">
+                            <tr>
+                                <td><span class="text-light align-top"><b style="color: red;">*</b></span></th>
+                                <td>&nbsp;</td>
+                                <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Volume vol (3) dengan Frekuensi vol (5).</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="text-light"><b style="color: red;">**</b></span></td>
+                                <td>&nbsp;</td>
+                                <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Perhitungan (7) dengan Harga satuan (9).</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Information End -->
+
         </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#050510" fill-opacity="1" d="M0,192L24,170.7C48,149,96,107,144,112C192,117,240,171,288,165.3C336,160,384,96,432,74.7C480,53,528,75,576,90.7C624,107,672,117,720,149.3C768,181,816,235,864,245.3C912,256,960,224,1008,197.3C1056,171,1104,149,1152,149.3C1200,149,1248,171,1296,186.7C1344,203,1392,213,1416,218.7L1440,224L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"></path>
+        </svg>
     </div>
     <!-- Banner 4 - Anggaran End -->
 
