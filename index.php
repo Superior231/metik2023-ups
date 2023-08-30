@@ -252,7 +252,7 @@ if (isset($_POST["search_btn"])) {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Download</button>
+                                            <a href="download_image.php?filename=<?php echo $row['gambar']; ?>" class="btn btn-primary">Download</a>
                                         </div>
                                     </div>
                                 </div>
