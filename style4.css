@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 
+:root {
+  --bg-scroll-bar: #090717;
+  --thumb-color: #1c1738;
+  --thumb-hover-color: #231e44;
+}
+
 * {
   font-family: "Poppins", sans-serif;
   margin: 0;
@@ -308,3 +314,40 @@ input.form-control:focus {
 /* Anggaran End */
 
 
+
+/* Scroll Bar */
+/* (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px; /* Lebar scroll bar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--bg-scroll-bar); /* Warna latar belakang track */
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 70px;
+  background-color: var(--thumb-color); /* Warna thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--thumb-hover-color); /* Warna thumb saat di-hover */
+}
+
+/* Untuk browser lainnya (Firefox) */
+scrollbar {
+  width: 10px; /* Lebar scroll bar */
+}
+
+scrollbar-track {
+  background-color: var(--bg-scroll-bar); /* Warna latar belakang track */
+}
+
+scrollbar-thumb {
+  background-color: var(--thumb-color); /* Warna thumb */
+}
+
+scrollbar-thumb:hover {
+  background-color: var(--thumb-hover-color); /* Warna thumb saat di-hover */
+}
+/* Scroll Bar End */
