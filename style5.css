@@ -314,6 +314,67 @@ input.form-control:focus {
 /* Anggaran End */
 
 
+/* Footer */
+.footer {
+  background: #050510;
+  color: #fff;
+}
+.footer .text-footer {
+  margin-top: 30px;
+}
+.footer h3 {
+  font-weight: 700;
+  margin-top: 33px;
+  margin-left: 15px;
+}
+.footer h4 {
+  margin-top: 33px;
+  width: 120px;
+  position: relative;
+}
+.footer h4::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  background-color: #2196f3;
+  height: 2px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.footer .col ul {
+  list-style: none;
+  margin-top: 30px;
+}
+.footer .col ul li a {
+  text-decoration: none;
+  color: #808080;
+}
+.footer .col ul li a:hover {
+  text-decoration: none;
+  color: #2196f3;
+}
+.footer .col ul li {
+  margin-top: 15px;
+  margin-left: -25px;
+}
+.footer .social-media a i {
+  color: #fff;
+}
+.footer .footer-bottom{
+  height: 55px;
+  background: #03030a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer .footer-bottom h6{
+  font-weight: 200;
+  font-size: 15px;
+}
+/* Footer End */
+
+
 
 /* Scroll Bar */
 /* (Chrome, Safari) */

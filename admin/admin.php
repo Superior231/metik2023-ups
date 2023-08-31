@@ -86,7 +86,7 @@ if (isset($_POST["search_btn"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style4.css">
+    <link rel="stylesheet" href="../style5.css">
     <!-- BS 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -630,6 +630,59 @@ if (isset($_POST["search_btn"])) {
     <!-- Banner 4 - Anggaran End -->
 
 
+    <!-- Footer -->
+    <footer class="footer" id="contacts">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-12 py-4 px-2">
+                <div class="col col-lg-6 col-md-7 col-sm-12">
+                    <div class="layout-logo d-flex">
+                        <img src="../assets/logo.png" alt="logo_metik_2023" style="width: 150px;">
+                    </div>
+
+                    <p class="text-footer text-muted ms-1">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam eligendi placeat odio voluptates rem asperiores voluptatibus enim est voluptatem impedit ipsam cupiditate labore sapiente corporis adipisci natus, nemo reiciendis doloremque sequi quos aspernatur! Porro, vel!</p>
+                </div>
+
+                <div class="col col-lg-2 col-md-1 col-sm-12"></div>
+
+                <div class="col col-lg-2 col-md-4 col-sm-6">
+                    <h4 style="width: min-content;">Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#anggaran">Anggaran</a></li>
+                    </ul>
+                </div>
+
+                <div class="col col-lg-2 col-md-12 col-sm-6">
+                    <h4 style="width: min-content;">Contacts</h4>
+                    <ul>
+                        <li><a href="https://www.instagram.com/ftikpancasakti/" target="_blank"><i class="fa-brands fa-instagram me-2"></i>ftikpancasakti</a></li>
+                        <li><a href="https://www.instagram.com/bemftikupstegal/" target="_blank"><i class="fa-brands fa-instagram me-2"></i>bemftikupstegal</a></li>
+                        <li><a href="#">Help / FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 mt-2">
+                    <div class="social-media ms-1">
+                        <img class="me-2" src="../assets/logo_informatika.jpg" alt="logo_informatika" style="width: 40px;">
+                        <img class="me-2" src="../assets/logo_informatika.jpg" alt="logo_sistem_informasi" style="width: 40px;">
+                        <img class="me-2" src="../assets/logo_informatika.jpg" alt="logo_mesin" style="width: 40px;">
+                        <img class="me-2" src="../assets/logo_informatika.jpg" alt="logo_industri" style="width: 40px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <h6 class="px-2 pt-2 text-center">copyright &copy;2023 Metik.</h6>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
+
+
     <!-- TOASTS -->
     <?php
     // Jika user berhasil login
@@ -665,7 +718,6 @@ if (isset($_POST["search_btn"])) {
 
 
     <script src="../script.js"></script>
-    <script src="admin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 
