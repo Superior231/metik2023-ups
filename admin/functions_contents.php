@@ -36,12 +36,12 @@ function editJudul($data) {
 // Edit data Contents End
 
 
-// Edit data Contents
+// Edit data About Contents
 function editAbout($data) {
     global $db;
     $id             = intval($data["id"]); // memaksa data menjadi integer
-    $about_judul    = mysqli_real_escape_string($db, htmlspecialchars($data["about_judul"]));
-    $about_subjudul = mysqli_real_escape_string($db, htmlspecialchars($data["about_subjudul"]));
+    $about_judul    = mysqli_real_escape_string($db, $data["about_judul"]);
+    $about_subjudul = mysqli_real_escape_string($db, $data["about_subjudul"]);
 
     $query = "UPDATE judul SET
                 about_judul = '$about_judul',
@@ -52,4 +52,4 @@ function editAbout($data) {
 
     return mysqli_affected_rows($db);
 }
-// Edit data Contents End
+// Edit data About Contents End
