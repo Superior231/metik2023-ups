@@ -101,16 +101,18 @@ if (isset($_POST["search_btn"])) {
                 <h2><b>About</b></h2>
             </div>
 
+            <?php foreach ($isi_contents as $row) : ?>
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col col-lg-4 col-md-6 col-sm-12">
                     <div class="text-about">
-                        <h3>The pain you feel today will be the <b style="color: #2196f3;">strength</b> you feel tomorrow!</h3>
+                        <h3><?= $row['about_judul']; ?></h3>
                     </div>
                 </div>
                 <div class="col col-lg-8 col-md-6 col-sm-12 text-muted">
-                    <p>Welcome to Superior Sport, your ultimate fitness destination. Discover expert guidance, informative articles, and interactive tools to help you achieve your fitness goals. <br><br>Join our community of enthusiasts and embrace a healthier lifestyle. Let us inspire and support you on your fitness journey, making every workout count towards a stronger, fitter you.</p>
+                    <p><?= $row['about_subjudul']; ?></p>
                 </div>
             </div>
+            <?php endforeach; ?>
 
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

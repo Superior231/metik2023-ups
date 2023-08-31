@@ -76,6 +76,27 @@ if (isset($_POST["edit_judul_btn"])) {
 }
 
 
+// Cek apakah tombol edit about sudah ditekan atau belum
+if (isset($_POST["edit_about_btn"])) {
+    // Cek apakah data berhasil diubah atau tidak
+    if (editAbout($_POST) > 0) {
+        echo "
+          <script>
+              alert('Data berhasil diubah');
+              document.location.href = ''
+          </script>
+      ";
+    } else {
+        echo "
+          <script>
+              alert('Data gagal diubah!');
+              document.location.href = 'admin.php#about'
+          </script>
+      ";
+    }
+}
+
+
 // PAGINATION
 $jumlahDataPerHalaman = 10;
 
@@ -207,6 +228,41 @@ if (isset($_POST["search_btn"])) {
     </form>
     <?php endforeach; ?>
     <!-- Modal Edit Judul End -->
+    
+    <!-- Modal Edit About -->
+    <?php foreach ($isi_contents as $row) : ?>
+    <form action="admin.php" method="post">
+        <div class="modal fade" id="editAboutModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                        <label for="about_judul" class="mt-2">About judul</label>
+                        <div class="input-group flex-nowrap">
+                            <textarea name="about_judul" id="about_judul" cols="60" rows="10"><?= $row['about_judul']; ?></textarea>
+                        </div>
+
+                        <label for="subjudul" class="mt-2">About subjudul</label>
+                        <div class="input-group flex-nowrap">
+                            <textarea name="about_subjudul" id="about_subjudul" cols="60" rows="10"><?= $row['about_subjudul']; ?></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="editAbout()" type="submit" id="edit_about_btn" name="edit_about_btn" class="btn btn-primary edit_about_btn">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <?php endforeach; ?>
+    <!-- Modal Edit About End -->
 
 
     <!-- Banner 2 - About -->
@@ -216,16 +272,24 @@ if (isset($_POST["search_btn"])) {
                 <h2><b>About</b></h2>
             </div>
 
+            <div class="edit d-flex">
+                <div class="container">
+                    <button class="btn btn-secondary" id="edit-judul-btn" data-bs-toggle="modal" data-bs-target="#editAboutModal<?= $row['id']; ?>"><i class="fa-solid fa-pencil my-auto">&nbsp;</i>Edit</button>
+                </div>
+            </div>
+
+            <?php foreach ($isi_contents as $row) : ?>
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col col-lg-4 col-md-6 col-sm-12">
                     <div class="text-about">
-                        <h3>The pain you feel today will be the <b style="color: #2196f3;">strength</b> you feel tomorrow!</h3>
+                        <h3><?= $row['about_judul']; ?></h3>
                     </div>
                 </div>
                 <div class="col col-lg-8 col-md-6 col-sm-12 text-muted">
-                    <p>Welcome to Superior Sport, your ultimate fitness destination. Discover expert guidance, informative articles, and interactive tools to help you achieve your fitness goals. <br><br>Join our community of enthusiasts and embrace a healthier lifestyle. Let us inspire and support you on your fitness journey, making every workout count towards a stronger, fitter you.</p>
+                    <p><?= $row['about_subjudul']; ?></p>
                 </div>
             </div>
+            <?php endforeach; ?>
 
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

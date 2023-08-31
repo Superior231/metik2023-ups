@@ -34,3 +34,22 @@ function editJudul($data) {
     return mysqli_affected_rows($db);
 }
 // Edit data Contents End
+
+
+// Edit data Contents
+function editAbout($data) {
+    global $db;
+    $id             = intval($data["id"]); // memaksa data menjadi integer
+    $about_judul    = mysqli_real_escape_string($db, $data["about_judul"]);    // memaksa data menjadi string
+    $about_subjudul = mysqli_real_escape_string($db, $data["about_subjudul"]); // memaksa data menjadi string
+
+    $query = "UPDATE judul SET
+                about_judul = '$about_judul',
+                about_subjudul = '$about_subjudul'
+              WHERE id = $id";
+
+    mysqli_query($db, $query);
+
+    return mysqli_affected_rows($db);
+}
+// Edit data Contents End
