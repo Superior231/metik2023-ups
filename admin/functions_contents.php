@@ -40,8 +40,8 @@ function editJudul($data) {
 function editAbout($data) {
     global $db;
     $id             = intval($data["id"]); // memaksa data menjadi integer
-    $about_judul    = mysqli_real_escape_string($db, $data["about_judul"]);    // memaksa data menjadi string
-    $about_subjudul = mysqli_real_escape_string($db, $data["about_subjudul"]); // memaksa data menjadi string
+    $about_judul    = mysqli_real_escape_string($db, htmlspecialchars($data["about_judul"]));
+    $about_subjudul = mysqli_real_escape_string($db, htmlspecialchars($data["about_subjudul"]));
 
     $query = "UPDATE judul SET
                 about_judul = '$about_judul',
