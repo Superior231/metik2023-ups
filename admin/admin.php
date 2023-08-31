@@ -9,6 +9,7 @@ if (!isAdmin()) {
 
 
 $riwayat_pembayaran = mysqli_query($db, "SELECT * FROM riwayat_pembayaran");
+$isi_contents = mysqli_query($db, "SELECT * FROM isi_contents");
 
 
 // Cek apakah tombol submit udah ditekan atau belum
@@ -130,8 +131,11 @@ if (isset($_POST["search_btn"])) {
 
         <!-- Content Banner -->
         <div class="content">
-            <h1>"Mengasah Pemikiran Kritis melalui Inovasi dan Teknologi di Fakultas Teknik"</h1>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, voluptatem!</p>
+            <?php foreach ($isi_contents as $row) : ?>
+                <h1 id="editable-judul"><?= $row['judul']; ?></h1>
+                <p id="editable-subjudul"><?= $row['subjudul']; ?></p>
+            <?php endforeach; ?>
+
 
             <?php if (isset($_SESSION['user'])) : ?>
                 <div class="button">
@@ -140,9 +144,50 @@ if (isset($_POST["search_btn"])) {
                 </div>
             <?php endif; ?>
         </div>
+
+        <div class="edit d-flex">
+            <div class="container">
+                <button class="btn btn-secondary" id="edit-judul-btn" data-bs-toggle="modal" data-bs-target="#editJudulModal<?= $row['id']; ?>"><i class="fa-solid fa-pencil my-auto">&nbsp;</i>Edit</button>
+            </div>
+        </div>
         <!-- Content Banner End -->
     </div>
     <!-- Banner 1 - Landing Page End -->
+
+    
+    <!-- Modal Edit Judul -->
+    <?php foreach ($isi_contents as $row) : ?>
+    <form action="admin.php" method="post">
+        <div class="modal fade" id="editJudulModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <label for="judul" class="mt-2">Judul</label>
+                        <div class="input-group flex-nowrap">
+                            <input type="text" name="judul" id="judul" class="form-control" placeholder="Judul" aria-label="judul" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row['judul']; ?>">
+                        </div>
+
+                        <label for="subjudul" class="mt-2">Subjudul</label>
+                        <div class="input-group flex-nowrap">
+                            <textarea name="subjudul" id="subjudul" cols="60" rows="10"><?= $row['subjudul']; ?></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="editJudul()" type="submit" id="edit-judul-btn" name="edit-judul-btn" class="btn btn-primary btn-edit-judul">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <?php endforeach; ?>
+    <!-- Modal Edit Judul End -->
 
 
     <!-- Banner 2 - About -->
@@ -390,8 +435,7 @@ if (isset($_POST["search_btn"])) {
                         <?php foreach ($riwayat_pembayaran as $row) : ?>
                             <tr>
                                 <td class="text-center">
-                                    <button style="border-color: transparent;" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $row['id']; ?>"><i class="fa fa-pencil"></i></button>
-                                    <a href="anggaranedit.php?id=<?= $row["id"]; ?>" class="link"></a> |
+                                    <button style="border-color: transparent;" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $row['id']; ?>"><i class="fa fa-pencil"></i></button> |
                                     <a href="anggaranhapus.php?id=<?= $row["id"]; ?>" class="link" onclick="return confirm('Apakah Anda yakin untuk menghapusnya?');"><i class="fa-solid fa-trash"></i></a>
                                 </td>
                                 <td class="text-center"><?= $row["jenis_belanja"]; ?></td>
@@ -621,6 +665,7 @@ if (isset($_POST["search_btn"])) {
 
 
     <script src="../script.js"></script>
+    <script src="admin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 

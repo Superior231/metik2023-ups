@@ -76,7 +76,7 @@ label {
   border-radius: 3px 0 0 3px;
   border: 1px;
   padding-top: 2px;
-  margin-left: 85%;
+  margin-left: 88%;
 }
 @media (max-width: 300px) {
   .pass-logo-pass {
@@ -90,7 +90,7 @@ label {
     border-radius: 3px 0 0 3px;
     border: 1px;
     padding-top: 2px;
-    margin-left: 81%;
+    margin-left: 83%;
   }
 }
 .pass-logo-pass button {
