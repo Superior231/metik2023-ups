@@ -1,6 +1,7 @@
 <?php
 
 require '../functions.php';
+require 'functions_contents.php';
 
 if (!isAdmin()) {
     $_SESSION['msg'] = "You must log in first";
@@ -9,13 +10,11 @@ if (!isAdmin()) {
 
 
 $riwayat_pembayaran = mysqli_query($db, "SELECT * FROM riwayat_pembayaran");
-$isi_contents = mysqli_query($db, "SELECT * FROM isi_contents");
+$isi_contents = mysqli_query($db, "SELECT * FROM judul");
 
 
 // Cek apakah tombol submit udah ditekan atau belum
 if (isset($_POST["tambah_btn"])) {
-
-
     // Cek apakah data berhasil ditambahkan atau tidak
     if (tambah($_POST) > 0) {
         echo "
@@ -37,8 +36,6 @@ if (isset($_POST["tambah_btn"])) {
 
 // Cek apakah tombol edit sudah ditekan atau belum
 if (isset($_POST["edit_btn"])) {
-
-
     // Cek apakah data berhasil diubah atau tidak
     if (edit($_POST) > 0) {
         echo "
@@ -52,6 +49,27 @@ if (isset($_POST["edit_btn"])) {
           <script>
               alert('Data gagal diubah!');
               document.location.href = 'admin.php#anggaran'
+          </script>
+      ";
+    }
+}
+
+
+// Cek apakah tombol edit judul sudah ditekan atau belum
+if (isset($_POST["edit_judul_btn"])) {
+    // Cek apakah data berhasil diubah atau tidak
+    if (editJudul($_POST) > 0) {
+        echo "
+          <script>
+              alert('Data berhasil diubah');
+              document.location.href = ''
+          </script>
+      ";
+    } else {
+        echo "
+          <script>
+              alert('Data gagal diubah!');
+              document.location.href = 'admin.php#home'
           </script>
       ";
     }
@@ -140,7 +158,7 @@ if (isset($_POST["search_btn"])) {
             <?php if (isset($_SESSION['user'])) : ?>
                 <div class="button">
                     <a href=""><button type="button" style="background-color: #257cc4;">Hi, <?= $_SESSION['user']['username']; ?>!</button></a>
-                    <a href="https://www.upstegal.ac.id/" target="_blank"><button type="button"><span></span>Contact Us</button></a>
+                    <a href="admin.php#contacts"><button type="button"><span></span>Contact Us</button></a>
                 </div>
             <?php endif; ?>
         </div>
@@ -167,6 +185,7 @@ if (isset($_POST["search_btn"])) {
                     </div>
 
                     <div class="modal-body">
+                        <input type="hidden" name="id" value="<?= $row['id']; ?>">
                         <label for="judul" class="mt-2">Judul</label>
                         <div class="input-group flex-nowrap">
                             <input type="text" name="judul" id="judul" class="form-control" placeholder="Judul" aria-label="judul" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row['judul']; ?>">
@@ -180,7 +199,7 @@ if (isset($_POST["search_btn"])) {
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button onclick="editJudul()" type="submit" id="edit-judul-btn" name="edit-judul-btn" class="btn btn-primary btn-edit-judul">Edit</button>
+                        <button onclick="editJudul()" type="submit" id="edit_judul_btn" name="edit_judul_btn" class="btn btn-primary edit_judul_btn">Edit</button>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 require 'functions.php';
 
 $riwayat_pembayaran = mysqli_query($db, "SELECT * FROM riwayat_pembayaran");
+$isi_contents = mysqli_query($db, "SELECT * FROM judul");
 
 
 // PAGINATION
@@ -78,12 +79,14 @@ if (isset($_POST["search_btn"])) {
 
         <!-- Content Banner -->
         <div class="content">
-            <h1>"Mengasah Pemikiran Kritis melalui Inovasi dan Teknologi di Fakultas Teknik"</h1>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, voluptatem!</p>
+            <?php foreach ($isi_contents as $row) : ?>
+                <h1 id="editable-judul"><?= $row['judul']; ?></h1>
+                <p id="editable-subjudul"><?= $row['subjudul']; ?></p>
+            <?php endforeach; ?>
 
             <div class="button">
                 <a href="auth/login.php"><button type="button" style="background-color: #257cc4;">Get Started</button></a>
-                <a href="https://www.upstegal.ac.id/" target="_blank"><button type="button"><span></span>Contact Us</button></a>
+                <a href="index.php#contacts"><button type="button"><span></span>Contact Us</button></a>
             </div>
         </div>
         <!-- Content Banner End -->
