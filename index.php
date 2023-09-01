@@ -4,6 +4,7 @@ require 'functions.php';
 
 $riwayat_pembayaran = mysqli_query($db, "SELECT * FROM riwayat_pembayaran");
 $isi_contents = mysqli_query($db, "SELECT * FROM judul");
+$gallery = mysqli_query($db, "SELECT * FROM gallery");
 
 
 // PAGINATION
@@ -102,16 +103,16 @@ if (isset($_POST["search_btn"])) {
             </div>
 
             <?php foreach ($isi_contents as $row) : ?>
-            <div class="row row-cols-1 row-cols-lg-2">
-                <div class="col col-lg-4 col-md-6 col-sm-12">
-                    <div class="text-about">
-                        <h3><?= $row['about_judul']; ?></h3>
+                <div class="row row-cols-1 row-cols-lg-2">
+                    <div class="col col-lg-4 col-md-6 col-sm-12">
+                        <div class="text-about">
+                            <h3><?= $row['about_judul']; ?></h3>
+                        </div>
+                    </div>
+                    <div class="col col-lg-8 col-md-6 col-sm-12 text-muted">
+                        <p><?= $row['about_subjudul']; ?></p>
                     </div>
                 </div>
-                <div class="col col-lg-8 col-md-6 col-sm-12 text-muted">
-                    <p><?= $row['about_subjudul']; ?></p>
-                </div>
-            </div>
             <?php endforeach; ?>
 
         </div>
@@ -125,48 +126,23 @@ if (isset($_POST["search_btn"])) {
     <!-- Banner 3 - Gallery -->
     <div class="banner-3">
         <div class="container-gallery">
-            <div class="label-gallery" id="gallery">
+            <div class="label-gallery d-flex gap-2" id="gallery">
                 <h2><b>Gallery</b></h2>
             </div>
 
+        <?php $i = 1; ?>
             <div class="row row-cols-2 row-cols-lg-5 row-cols-md-3 row-sm-1 g-3">
+                <?php foreach ($gallery as $row) : ?>
                 <div class="col">
                     <div class="card">
-                        <img src="assets/gallery1.jpg" class="card-img" alt="...">
+                        
+                        <img src="img/<?php echo $row["gambar"]; ?>" alt="sss" class="card-img">
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
-
+        <?php $i++; ?>
+            
         </div>
     </div>
     <!-- Banner 3 - Gallery End -->
@@ -282,7 +258,7 @@ if (isset($_POST["search_btn"])) {
                             </div>
                             <!-- Modal Bukti Pembayaran End -->
 
-                        <?php $i++; ?>
+                            <?php $i++; ?>
                         <?php endforeach; ?>
                         <tr>
                             <td class="text-center" colspan="9"><b>Jumlah Total</b></td>
@@ -416,7 +392,7 @@ if (isset($_POST["search_btn"])) {
     </footer>
     <!-- Footer End -->
 
-    
+
 
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

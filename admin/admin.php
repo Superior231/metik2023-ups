@@ -11,12 +11,34 @@ if (!isAdmin()) {
 
 $riwayat_pembayaran = mysqli_query($db, "SELECT * FROM riwayat_pembayaran");
 $isi_contents = mysqli_query($db, "SELECT * FROM judul");
+$gallery = mysqli_query($db, "SELECT * FROM gallery");
 
 
 // Cek apakah tombol submit udah ditekan atau belum
 if (isset($_POST["tambah_btn"])) {
     // Cek apakah data berhasil ditambahkan atau tidak
     if (tambah($_POST) > 0) {
+        echo "
+            <script>
+                alert('Data berhasil ditambahkan');
+                document.location.href = 'admin.php'
+            </script>
+        ";
+    } else {
+        echo "
+            <script>
+                alert('Data gagal ditambahkan!');
+                document.location.href = 'admin.php'
+            </script>
+        ";
+    }
+}
+
+
+// Cek apakah tombol submit udah ditekan atau belum
+if (isset($_POST["tambahGallery_btn"])) {
+    // Cek apakah data berhasil ditambahkan atau tidak
+    if (tambahGallery($_POST) > 0) {
         echo "
             <script>
                 alert('Data berhasil ditambahkan');
@@ -193,74 +215,74 @@ if (isset($_POST["search_btn"])) {
     </div>
     <!-- Banner 1 - Landing Page End -->
 
-    
+
     <!-- Modal Edit Judul -->
     <?php foreach ($isi_contents as $row) : ?>
-    <form action="admin.php" method="post">
-        <div class="modal fade" id="editJudulModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <input type="hidden" name="id" value="<?= $row['id']; ?>">
-                        <label for="judul" class="mt-2">Judul</label>
-                        <div class="input-group flex-nowrap">
-                            <input type="text" name="judul" id="judul" class="form-control" placeholder="Judul" aria-label="judul" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row['judul']; ?>">
+        <form action="admin.php" method="post">
+            <div class="modal fade" id="editJudulModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <label for="subjudul" class="mt-2">Subjudul</label>
-                        <div class="input-group flex-nowrap">
-                            <textarea name="subjudul" id="subjudul" cols="60" rows="10"><?= $row['subjudul']; ?></textarea>
-                        </div>
-                    </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                            <label for="judul" class="mt-2">Judul</label>
+                            <div class="input-group flex-nowrap">
+                                <input type="text" name="judul" id="judul" class="form-control" placeholder="Judul" aria-label="judul" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row['judul']; ?>">
+                            </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button onclick="editJudul()" type="submit" id="edit_judul_btn" name="edit_judul_btn" class="btn btn-primary edit_judul_btn">Edit</button>
+                            <label for="subjudul" class="mt-2">Subjudul</label>
+                            <div class="input-group flex-nowrap">
+                                <textarea name="subjudul" id="subjudul" cols="60" rows="10"><?= $row['subjudul']; ?></textarea>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button onclick="editJudul()" type="submit" id="edit_judul_btn" name="edit_judul_btn" class="btn btn-primary edit_judul_btn">Edit</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
     <?php endforeach; ?>
     <!-- Modal Edit Judul End -->
-    
+
     <!-- Modal Edit About -->
     <?php foreach ($isi_contents as $row) : ?>
-    <form action="admin.php" method="post">
-        <div class="modal fade" id="editAboutModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <input type="hidden" name="id" value="<?= $row['id']; ?>">
-                        <label for="about_judul" class="mt-2">About judul</label>
-                        <div class="input-group flex-nowrap">
-                            <textarea name="about_judul" id="about_judul" cols="60" rows="10"><?= $row['about_judul']; ?></textarea>
+        <form action="admin.php" method="post">
+            <div class="modal fade" id="editAboutModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <label for="subjudul" class="mt-2">About subjudul</label>
-                        <div class="input-group flex-nowrap">
-                            <textarea name="about_subjudul" id="about_subjudul" cols="60" rows="10"><?= $row['about_subjudul']; ?></textarea>
-                        </div>
-                    </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                            <label for="about_judul" class="mt-2">About judul</label>
+                            <div class="input-group flex-nowrap">
+                                <textarea name="about_judul" id="about_judul" cols="60" rows="10"><?= $row['about_judul']; ?></textarea>
+                            </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button onclick="editAbout()" type="submit" id="edit_about_btn" name="edit_about_btn" class="btn btn-primary edit_about_btn">Edit</button>
+                            <label for="subjudul" class="mt-2">About subjudul</label>
+                            <div class="input-group flex-nowrap">
+                                <textarea name="about_subjudul" id="about_subjudul" cols="60" rows="10"><?= $row['about_subjudul']; ?></textarea>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button onclick="editAbout()" type="submit" id="edit_about_btn" name="edit_about_btn" class="btn btn-primary edit_about_btn">Edit</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
     <?php endforeach; ?>
     <!-- Modal Edit About End -->
 
@@ -279,16 +301,16 @@ if (isset($_POST["search_btn"])) {
             </div>
 
             <?php foreach ($isi_contents as $row) : ?>
-            <div class="row row-cols-1 row-cols-lg-2">
-                <div class="col col-lg-4 col-md-6 col-sm-12">
-                    <div class="text-about">
-                        <h3><?= $row['about_judul']; ?></h3>
+                <div class="row row-cols-1 row-cols-lg-2">
+                    <div class="col col-lg-4 col-md-6 col-sm-12">
+                        <div class="text-about">
+                            <h3><?= $row['about_judul']; ?></h3>
+                        </div>
+                    </div>
+                    <div class="col col-lg-8 col-md-6 col-sm-12 text-muted">
+                        <p><?= $row['about_subjudul']; ?></p>
                     </div>
                 </div>
-                <div class="col col-lg-8 col-md-6 col-sm-12 text-muted">
-                    <p><?= $row['about_subjudul']; ?></p>
-                </div>
-            </div>
             <?php endforeach; ?>
 
         </div>
@@ -302,50 +324,67 @@ if (isset($_POST["search_btn"])) {
     <!-- Banner 3 - Gallery -->
     <div class="banner-3">
         <div class="container-gallery">
-            <div class="label-gallery" id="gallery">
+            <div class="label-gallery d-flex gap-2" id="gallery">
                 <h2><b>Gallery</b></h2>
+                <div class="actions">
+                    <button type="button" style="background: transparent; border-color: transparent;" data-bs-toggle="modal" data-bs-target="#tambahGalleryModal"><i class="fa-solid fa-square-plus fa-2x text-light"></i></button>
+                </div>
             </div>
 
+        <?php $i = 1; ?>
             <div class="row row-cols-2 row-cols-lg-5 row-cols-md-3 row-sm-1 g-3">
+                <?php foreach ($gallery as $row) : ?>
                 <div class="col">
                     <div class="card">
-                        <img src="../assets/gallery1.jpg" class="card-img" alt="...">
+                        
+                        <img src="../img/<?php echo $row["gambar"]; ?>" alt="sss" class="card-img">
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="../assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="../assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="../assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="../assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="../assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="../assets/gallery1.jpg" class="card-img" alt="...">
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
-
+        <?php $i++; ?>
+            
         </div>
     </div>
+
+    <!-- Modal Tambah Gallery -->
+    <form action="admin.php" method="post" enctype="multipart/form-data">
+        <div class="modal fade" id="tambahGalleryModal" tabindex="-1" aria-labelledby="tambahGalleryModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tambahGalleryModalLabel">Tambah gallery</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <label for="gambar" class="">Image</label>
+                        <div class="input-group flex-nowrap">
+                            <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="gambar" aria-describedby="addon-wrapping">
+                        </div>
+
+                        <label for="keterangan" class="mt-3">Keterangan</label>
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-circle-info"></i></span>
+                            <input type="text" name="keterangan" id="keterangan" class="form-control" placeholder="Masukkan keterangan gambar..." aria-label="keterangan" aria-describedby="addon-wrapping" autocomplete="off">
+                        </div>
+
+                        <label for="date" class="mt-3">Date</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-clock"></i></span>
+                            <input type="date" name="date" id="date" class="form-control" aria-label="date" aria-describedby="addon-wrapping" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="tambahGallery()" type="submit" name="tambahGallery_btn" class="btn btn-primary btn-tambah-gallery">Tambah</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Modal Tambah Gallery End -->
     <!-- Banner 3 - Gallery End -->
 
 
@@ -404,7 +443,7 @@ if (isset($_POST["search_btn"])) {
                             <div class="modal-body">
                                 <label for="gambar" class="">Bukti pembayaran</label>
                                 <div class="input-group flex-nowrap">
-                                    <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="Username" aria-describedby="addon-wrapping">
+                                    <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="gambar" aria-describedby="addon-wrapping">
                                 </div>
 
                                 <label for="type" class="mt-2">Type</label>
