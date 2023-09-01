@@ -70,7 +70,7 @@ if (isset($_POST["edit_btn"])) {
         echo "
           <script>
               alert('Data gagal diubah!');
-              document.location.href = 'admin.php#anggaran'
+              document.location.href = ''
           </script>
       ";
     }
@@ -91,7 +91,7 @@ if (isset($_POST["edit_judul_btn"])) {
         echo "
           <script>
               alert('Data gagal diubah!');
-              document.location.href = 'admin.php#home'
+              document.location.href = ''
           </script>
       ";
     }
@@ -112,7 +112,7 @@ if (isset($_POST["edit_about_btn"])) {
         echo "
           <script>
               alert('Data gagal diubah!');
-              document.location.href = 'admin.php#about'
+              document.location.href = ''
           </script>
       ";
     }
@@ -448,7 +448,7 @@ if (isset($_POST["search_btn"])) {
 
                                 <label for="type" class="mt-2">Type</label>
                                 <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-venus-mars icon"></i></span>
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-star icon"></i></span>
                                     <select class="form-select" aria-label="Default select example" name="type" id="type" required>
                                         <option selected>Select type</option>
                                         <option value="Acara">Acara</option>
@@ -466,7 +466,7 @@ if (isset($_POST["search_btn"])) {
 
                                 <label for="harga_satuan" class="mt-2">Harga satuan</label>
                                 <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-sack-dollar"></i></span>
                                     <input type="text" name="harga_satuan" id="harga_satuan" class="form-control" placeholder="Rp. " aria-label="harga_satuan" aria-describedby="addon-wrapping" autocomplete="off" required>
                                 </div>
 
@@ -475,13 +475,13 @@ if (isset($_POST["search_btn"])) {
                                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-list-ol"></i></span>
                                     <input type="text" name="volume_vol" id="volume_vol" class="form-control me-2" placeholder="Vol : 1, 2, 3,..." aria-label="volume_vol" aria-describedby="addon-wrapping" autocomplete="off" required>
 
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-scroll"></i></span>
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-box-open"></i></span>
                                     <input type="text" name="volume_sat" id="volume_sat" class="form-control" placeholder="Satuan : Lembar, Box, Buah" aria-label="volume_sat" aria-describedby="addon-wrapping" autocomplete="off" required>
                                 </div>
 
                                 <label for="frekuensi_vol" class="mt-2">Frekuensi</label>
                                 <div class="input-group flex">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-list-ol"></i></span>
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-chart-line"></i></span>
                                     <input type="text" name="frekuensi_vol" id="frekuensi_vol" class="form-control me-2" placeholder="Vol : 1, 2, 3,..." aria-label="frekuensi_vol" aria-describedby="addon-wrapping" autocomplete="off" required>
 
                                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-scroll"></i></span>
@@ -490,6 +490,7 @@ if (isset($_POST["search_btn"])) {
 
                                 <label for="date" class="mt-2">Date</label>
                                 <div class="input-group">
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-clock"></i></span>
                                     <input type="date" name="date" id="date" class="form-control" aria-label="date" aria-describedby="addon-wrapping" required>
                                 </div>
 
@@ -595,7 +596,7 @@ if (isset($_POST["search_btn"])) {
 
                                                 <label for="type" class="mt-2">Type</label>
                                                 <div class="input-group flex-nowrap">
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-venus-mars icon"></i></span>
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-star icon"></i></span>
                                                     <select class="form-select" aria-label="Default select example" name="type" id="type" required>
                                                         <option selected value="<?= $row['type']; ?>">Select type</option>
                                                         <option value="Acara">Acara</option>
@@ -613,7 +614,7 @@ if (isset($_POST["search_btn"])) {
 
                                                 <label for="harga_satuan" class="mt-2">Harga satuan</label>
                                                 <div class="input-group flex-nowrap">
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-sack-dollar"></i></span>
                                                     <input type="text" name="harga_satuan" id="harga_satuan" class="form-control" placeholder="Rp. " aria-label="harga_satuan" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["harga_satuan"]; ?>">
                                                 </div>
 
@@ -622,13 +623,13 @@ if (isset($_POST["search_btn"])) {
                                                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-list-ol"></i></span>
                                                     <input type="text" name="volume_vol" id="volume_vol" class="form-control me-2" placeholder="Vol : 1, 2, 3,..." aria-label="volume_vol" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["volume_vol"]; ?>">
 
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-scroll"></i></span>
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-box-open"></i></span>
                                                     <input type="text" name="volume_sat" id="volume_sat" class="form-control" placeholder="Satuan : Lembar, Box, Buah" aria-label="volume_sat" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["volume_sat"]; ?>">
                                                 </div>
 
                                                 <label for="frekuensi_vol" class="mt-2">Frekuensi</label>
                                                 <div class="input-group flex">
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-list-ol"></i></span>
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-chart-line"></i></span>
                                                     <input type="text" name="frekuensi_vol" id="frekuensi_vol" class="form-control me-2" placeholder="Vol : 1, 2, 3,..." aria-label="frekuensi_vol" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["frekuensi_vol"]; ?>">
 
                                                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-scroll"></i></span>
@@ -637,6 +638,7 @@ if (isset($_POST["search_btn"])) {
 
                                                 <label for="date" class="mt-2">Date</label>
                                                 <div class="input-group">
+                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-clock"></i></span>
                                                     <input type="date" name="date" id="date" class="form-control" aria-label="date" aria-describedby="addon-wrapping" value="<?= $row["date"]; ?>">
                                                 </div>
 
