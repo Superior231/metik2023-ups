@@ -30,6 +30,14 @@ thead tr td {
 tbody tr td{
     border: 1px solid #dee2e6;
 }
+tbody tr.ket {
+    background-color: transparent;
+    border: 0px transparent;
+}
+tbody tr td.ket {
+    background-color: transparent;
+    border: 0px transparent;
+}
 
 tbody tr  {
     background-color: #fff;

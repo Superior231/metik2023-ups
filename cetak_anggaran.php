@@ -101,6 +101,28 @@ $html = '
 </div>
 <!-- Table End -->
 
+<!-- Information -->
+    <div class="informations mt-5">
+        <div class="container-information">
+        <h4 class="mb-2">Keterangan</h4>
+            <table border="0">
+                <tbody class="align-top">
+                    <tr class="ket">
+                        <td class="ket"><span class="align-top"><b style="color: red;">*</b></span></th>
+                        <td class="ket">&nbsp;</td>
+                        <td class="ket"><span>adalah tanda untuk menentukan hasil kali dari Volume vol (3) dengan Frekuensi vol (5).</span></td>
+                    </tr>
+                    <tr class="ket">
+                        <td class="ket"><span><b style="color: red;">**</b></span></td>
+                        <td class="ket">&nbsp;</td>
+                        <td class="ket"><span>adalah tanda untuk menentukan hasil kali dari Perhitungan (7) dengan Harga satuan (9).</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- Information End -->
+
 </body>
 </html>';
 
