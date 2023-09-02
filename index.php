@@ -304,6 +304,12 @@ if (isset($_POST["search_btn"])) {
             </div>
             <!-- Tombol Pagination End -->
 
+            <!-- Download file pdf Anggaran -->
+            <div class="download-action">
+                <a href="cetak_anggaran.php"><button class="btn btn-primary float-end" style="border-radius: 0px;">Download pdf</button></a>
+            </div>
+            <!-- Download file pdf Anggaran End -->
+
             <!-- Information -->
             <div class="informations mt-5">
                 <div class="container-information">
