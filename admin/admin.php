@@ -162,7 +162,7 @@ if (isset($_POST["search_btn"])) {
         <!-- Navbar -->
         <nav class="navbar">
             <div class="container">
-                <a class="navbar-brand" href=""><img src="../assets/logo.png" alt="metik_2023" style="width: 100px;"></a>
+                <a class="navbar-brand" href="admin.php"><img src="../assets/logo.png" alt="metik_2023" style="width: 100px;"></a>
                 <ul class="links">
                     <li><a href="#home" class="active text-light">Home</a></li>
                     <li><a href="#about">About</a></li>
@@ -718,6 +718,12 @@ if (isset($_POST["search_btn"])) {
                 <?php endif; ?>
             </div>
             <!-- Tombol Pagination End -->
+
+            <!-- Download file pdf Anggaran -->
+            <div class="download-action">
+                <a href="../cetak_anggaran.php" target="_blank"><button class="btn btn-primary float-end" style="border-radius: 0px;">Download pdf</button></a>
+            </div>
+            <!-- Download file pdf Anggaran End -->
 
             <!-- Information -->
             <div class="informations mt-5">
