@@ -521,11 +521,11 @@ if (isset($_POST["search_btn"])) {
                             <th class="text-center" rowspan="4" style="vertical-align: middle;">Kwitansi</th>
                         </tr>
                         <tr>
-                            <th class="text-center" colspan="2">Volume</th>
-                            <th class="text-center" colspan="2">Frekuensi</th>
-                            <th class="text-center">Perhitungan</th>
-                            <th class="text-center">Sat</th>
-                            <th class="text-center">Harga Satuan</th>
+                            <th class="text-center" style="vertical-align: middle;" colspan="2">Volume</th>
+                            <th class="text-center" style="vertical-align: middle;" colspan="2">Frekuensi</th>
+                            <th class="text-center" style="vertical-align: middle;">Perhitungan</th>
+                            <th class="text-center" style="vertical-align: middle;">Sat</th>
+                            <th class="text-center" style="vertical-align: middle;">Harga Satuan</th>
                         </tr>
                         <tr>
                             <td class="text-center">1</td>
