@@ -306,7 +306,7 @@ if (isset($_POST["search_btn"])) {
 
             <!-- Download file pdf Anggaran -->
             <div class="download-action">
-                <a href="cetak_anggaran.php"><button class="btn btn-primary float-end" style="border-radius: 0px;">Download pdf</button></a>
+                <a href="cetak_anggaran.php" target="_blank"><button class="btn btn-primary float-end" style="border-radius: 0px;">Download pdf</button></a>
             </div>
             <!-- Download file pdf Anggaran End -->
 
