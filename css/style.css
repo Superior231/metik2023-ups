@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-
 :root {
   --bg-scroll-bar: #090717;
   --thumb-color: #1c1738;
@@ -17,7 +16,7 @@
   width: 100%;
   height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url(assets/parallax.jpg);
+    url(../assets/parallax.jpg);
   background-size: cover;
   background-position: center;
 }
