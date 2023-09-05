@@ -1,7 +1,7 @@
 <?php
 
-require '../functions.php';
 require 'functions_contents.php';
+require '../functions.php';
 
 if (!isAdmin()) {
     $_SESSION['msg'] = "You must log in first";
@@ -119,6 +119,27 @@ if (isset($_POST["edit_about_btn"])) {
 }
 
 
+// Cek apakah tombol edit about sudah ditekan atau belum
+if (isset($_POST["edit_gallery_btn"])) {
+    // Cek apakah data berhasil diubah atau tidak
+    if (editGallery($_POST) > 0) {
+        echo "
+          <script>
+              alert('Data berhasil diubah');
+              document.location.href = ''
+          </script>
+      ";
+    } else {
+        echo "
+          <script>
+              alert('Data gagal diubah!');
+              document.location.href = ''
+          </script>
+      ";
+    }
+}
+
+
 // PAGINATION
 $jumlahDataPerHalaman = 10;
 
@@ -147,7 +168,7 @@ if (isset($_POST["search_btn"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style1.css">
     <!-- BS 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -331,19 +352,70 @@ if (isset($_POST["search_btn"])) {
                 </div>
             </div>
 
-        <?php $i = 1; ?>
+            <?php $i = 1; ?>
             <div class="row row-cols-2 row-cols-lg-5 row-cols-md-3 row-sm-1 g-3">
                 <?php foreach ($gallery as $row) : ?>
-                <div class="col">
-                    <div class="card">
-                        
-                        <img src="../img/<?php echo $row["gambar"]; ?>" alt="sss" class="card-img">
+                    <div class="col">
+                        <div class="gallery-actions">
+                            <button class="btn btn-primary" id="edit-gallery-btn" data-bs-toggle="modal" data-bs-target="#editGalleryModal<?= $row['id']; ?>">Edit</button>
+                            <a href="hapusgallery.php?id=<?= $row["id"]; ?>" class="link" onclick="return confirm('Apakah Anda yakin untuk menghapusnya?');"><button class="btn btn-danger">Hapus</button></a>
+                        </div>
+                        <div class="card">
+                            <div class="gambar">
+                                <img src="../img/<?php echo $row["gambar"]; ?>" alt="gallery image" class="card-img">
+                            </div>
+                            <div class="keterangan">
+                                <p><?= $row["keterangan"]; ?></p>
+                                <p><?= $row["date"]; ?></p>
+                            </div>
+                        </div>
+
+                        <!-- Modal Edit Gallery -->
+                        <form action="admin.php" method="post" enctype="multipart/form-data">
+                            <div class="modal fade" id="editGalleryModal<?= $row['id']; ?>" tabindex="-1" aria-labelledby="editGalleryModal<?= $row['id']; ?>" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editGalleryModal<?= $row['id']; ?>">Edit gallery</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                                            <input type="hidden" name="gambarLama" value="<?= $row['gambar']; ?>">
+
+                                            <label for="gambar" class="">Image</label>
+                                            <div class="input-group flex-nowrap">
+                                                <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="image" aria-describedby="addon-wrapping">
+                                            </div>
+
+                                            <label for="keterangan" class="mt-2">keterangan</label>
+                                            <div class="input-group flex-nowrap">
+                                                <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-circle-info"></i></span>
+                                                <input type="text" name="keterangan" id="keterangan" class="form-control" placeholder="keterangan" aria-label="keterangan" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row['keterangan']; ?>">
+                                            </div>
+
+                                            <label for="date" class="mt-2">Date</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-clock"></i></span>
+                                                <input type="date" name="date" id="date" class="form-control" aria-label="date" aria-describedby="addon-wrapping" value="<?= $row["date"]; ?>">
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" id="edit_gallery_btn" name="edit_gallery_btn" class="btn btn-primary edit_gallery_btn">Edit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Modal Edit Gallery End -->
                     </div>
-                </div>
                 <?php endforeach; ?>
             </div>
-        <?php $i++; ?>
-            
+            <?php $i++; ?>
+
         </div>
     </div>
 
@@ -360,7 +432,7 @@ if (isset($_POST["search_btn"])) {
                     <div class="modal-body">
                         <label for="gambar" class="">Image</label>
                         <div class="input-group flex-nowrap">
-                            <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="gambar" aria-describedby="addon-wrapping">
+                            <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="gambar" aria-describedby="addon-wrapping" required>
                         </div>
 
                         <label for="keterangan" class="mt-3">Keterangan</label>
@@ -400,18 +472,6 @@ if (isset($_POST["search_btn"])) {
 
             <!-- Actions -->
             <div class="actions mb-2">
-                <!-- <div class="show d-flex text-light" style="height: 35px;">
-                    <span class="me-2 my-auto">Show</span>
-                    <div class="input-group flex-nowrap">
-                        <select class="form-select" aria-label="Default select example" name="show" id="show">
-                            <option selected value="5">5</option>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                        </select>
-                    </div>
-                </div> -->
 
                 <button type="button" style="background: transparent; border-color: transparent;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-square-plus fa-2x text-light"></i></button>
                 <a href="admin.php"><button type="button" style="background: transparent; border-color: transparent;"><i class="fa-solid fa-rotate-right fa-2x text-light"></i></button></a>

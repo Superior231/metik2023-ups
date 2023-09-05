@@ -36,7 +36,7 @@ if (isset($_POST["search_btn"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style1.css">
     <!-- BS 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -130,19 +130,24 @@ if (isset($_POST["search_btn"])) {
                 <h2><b>Gallery</b></h2>
             </div>
 
-        <?php $i = 1; ?>
+            <?php $i = 1; ?>
             <div class="row row-cols-2 row-cols-lg-5 row-cols-md-3 row-sm-1 g-3">
                 <?php foreach ($gallery as $row) : ?>
-                <div class="col">
-                    <div class="card">
-                        
-                        <img src="img/<?php echo $row["gambar"]; ?>" alt="sss" class="card-img">
+                    <div class="col">
+                        <div class="card">
+                            <div class="gambar">
+                                <img src="img/<?php echo $row["gambar"]; ?>" alt="gallery image" class="card-img">
+                            </div>
+                            <div class="keterangan">
+                                <p><?= $row["keterangan"]; ?></p>
+                                <p><?= $row["date"]; ?></p>
+                            </div>
+                        </div>
                     </div>
-                </div>
                 <?php endforeach; ?>
             </div>
-        <?php $i++; ?>
-            
+            <?php $i++; ?>
+
         </div>
     </div>
     <!-- Banner 3 - Gallery End -->
