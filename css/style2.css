@@ -246,7 +246,6 @@
 }
 
 .card {
-  cursor: pointer;
   position: relative;
   overflow: hidden;
 }
@@ -268,13 +267,53 @@
   background-color: rgba(0, 0, 0, 0.5);
   transition: .5s;
 }
-.keterangan p {
+.keterangan a,
+.keterangan button {
+  position: absolute;
+  top: -6px;
+  left: 75%;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 450px) {
+  .keterangan a,
+  .keterangan button {
+    top: -6px;
+    left: 70%;
+  }
+}
+@media (max-width: 400px) {
+  .keterangan a,
+  .keterangan button {
+    top: -6px;
+    left: 65%;
+  }
+}
+@media (max-width: 350px) {
+  .keterangan a,
+  .keterangan button {
+    top: -6px;
+    left: 60%;
+  }
+}
+@media (max-width: 300px) {
+  .keterangan a,
+  .keterangan button {
+    top: -6px;
+    left: 50%;
+  }
+}
+.keterangan p,
+.keterangan a {
   margin: 10px;
   color: #fff;
   opacity: 0;
   transition: .5s;
 }
-.card:hover .keterangan p {
+.card:hover .keterangan p,
+.card:hover .keterangan a {
   opacity: 1; /* Tampilkan keterangan pada hover */
   transition: .5s;
 }
