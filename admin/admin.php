@@ -586,7 +586,7 @@ if (isset($_POST["edit_gallery_btn"])) {
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="4" class="text-center">Jumlah</th>
+                            <th colspan="6" class="text-center">Jumlah</th>
                             <th colspan="1" class="text-end">Rp. <?= $format_jumBiaya; ?></th>
                             <th></th>
                         </tr>
