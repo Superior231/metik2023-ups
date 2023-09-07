@@ -542,6 +542,7 @@ if (isset($_POST["edit_gallery_btn"])) {
                             <th class="text-center">Satuan</th>
                             <th class="text-center">Jumlah</th>
                             <th class="text-center">Harga<span style="color: red;">*</span></th>
+                            <th class="text-center">Date</th>
                             <th class="text-center">Kwitansi</th>
                         </tr>
                     </thead>
@@ -557,6 +558,7 @@ if (isset($_POST["edit_gallery_btn"])) {
                                 <td class="text-end"><?= "Rp. " . number_format($row["satuan"], 0, ',', '.'); ?></td>
                                 <td class="text-end"><?= $row["jumlah"]; ?></td>
                                 <td class="text-end"><?= "Rp. " . number_format($row["harga"], 0, ',', '.'); ?></td>
+                                <td class="text-center"><?= $row["date"]; ?></td>
                                 <td class="text-center"><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#kwitansiModal<?php echo $row['id']; ?>">Lihat</button></td>
                             </tr>
 
@@ -584,7 +586,7 @@ if (isset($_POST["edit_gallery_btn"])) {
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="5" class="text-center">Jumlah</th>
+                            <th colspan="4" class="text-center">Jumlah</th>
                             <th colspan="1" class="text-end">Rp. <?= $format_jumBiaya; ?></th>
                             <th></th>
                         </tr>
@@ -679,7 +681,7 @@ if (isset($_POST["edit_gallery_btn"])) {
                     <table>
                         <tbody class="align-top">
                             <tr>
-                                <td><span class="text-light align-top"><b style="color: red;">*</b></span></th>
+                                <td><span class="text-light align-top"><b style="color: red;">*</b></span></td>
                                 <td>&nbsp;</td>
                                 <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Satuan dengan Jumlah.</span></td>
                             </tr>

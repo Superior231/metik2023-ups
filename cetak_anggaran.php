@@ -3,7 +3,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 require 'functions.php';
-$riwayat_pembayaran = mysqli_query($db, "SELECT * FROM riwayat_pembayaran");
+$anggaran = mysqli_query($db, "SELECT * FROM anggaran ORDER BY type ASC");
 
 $mpdf = new \Mpdf\Mpdf();
 
@@ -18,7 +18,7 @@ $html = '
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/cetak.css">
+    <link rel="stylesheet" href="css/cetak1.css">
     <!-- BS 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -29,74 +29,38 @@ $html = '
 <body>
 <!-- Table -->
 <div class="table-responsive">
-    <table class="table table-sm table-bordered border-primary" border="1" cellpadding="8" cellspacing="0">
-        <thead class="table-color">
+    <table class="table table-hover table-light table-striped table-bordered table-sm" border="1" cellpadding="8" cellspacing="0">
+        <thead class="table-info">
             <tr>
-                <th class="text-center text-light" rowspan="2" style="vertical-align: middle;">Jenis Belanja</th>
-                <th class="text-center text-light" rowspan="2" style="vertical-align: middle;">Type</th>
-                <th class="text-center text-light" colspan="7">Rincian Biaya</th>
-                <th class="text-center text-light" rowspan="2" style="vertical-align: middle;">Jumlah Anggaran</th>
-                <th class="text-center text-light" rowspan="4" style="vertical-align: middle;">Update at</th>
-                <th class="text-center text-light" rowspan="4" style="vertical-align: middle;">Kwitansi</th>
-            </tr>
-            <tr>
-                <th class="text-center text-light" colspan="2" style="vertical-align: middle;">Volume</th>
-                <th class="text-center text-light" colspan="2" style="vertical-align: middle;">Frekuensi</th>
-                <th class="text-center text-light" style="vertical-align: middle;">Perhitungan</th>
-                <th class="text-center text-light" style="vertical-align: middle;">Sat</th>
-                <th class="text-center text-light" style="vertical-align: middle;">Harga Satuan</th>
-            </tr>
-            <tr>
-                <td class="text-center text-light">1</td>
-                <td class="text-center text-light">2</td>
-                <td class="text-center text-light">3</td>
-                <td class="text-center text-light">4</td>
-                <td class="text-center text-light">5</td>
-                <td class="text-center text-light">6</td>
-                <td class="text-center text-light">7<b style="color: red;">*</b></td>
-                <td class="text-center text-light">8</td>
-                <td class="text-center text-light">9</td>
-                <td class="text-center text-light">10<b style="color: red;">**</b></td>
-            </tr>
-            <tr>
-                <td class="text-center text-light"></td>
-                <td class="text-center text-light"></td>
-                <td class="text-center text-light">Vol</td>
-                <td class="text-center text-light">Sat</td>
-                <td class="text-center text-light">Vol</td>
-                <td class="text-center text-light">Sat</td>
-                <td class="text-center text-light"></td>
-                <td class="text-center text-light"></td>
-                <td class="text-center text-light"></td>
-                <td class="text-center text-light"></td>
+                <th class="text-center text-light">Nama Barang</th>
+                <th class="text-center text-light">Type</th>
+                <th class="text-center text-light">Satuan</th>
+                <th class="text-center text-light">Jumlah</th>
+                <th class="text-center text-light">Harga<span style="color: red;">*</span></th>
+                <th class="text-center text-light">Date</th>
             </tr>
         </thead>
         
-        <tbody class="align-middle">';
-        foreach( $riwayat_pembayaran as $row) {
+        <tbody>';
+        foreach( $anggaran as $row) {
             $html .= '<tr>
-                        <td class="text-center" style="vertical-align: middle;">'. $row["jenis_belanja"] .'</td>
-                        <td class="text-center" style="vertical-align: middle;">'. $row["type"] .'</td>
-                        <td class="text-center" style="vertical-align: middle;">'. $row["volume_vol"] .'</td>
-                        <td class="text-center" style="vertical-align: middle;">'. $row["volume_sat"] .'</td>
-                        <td class="text-center" style="vertical-align: middle;">'. $row["frekuensi_vol"] .'</td>
-                        <td class="text-center" style="vertical-align: middle;">'. $row["frekuensi_sat"] .'</td>
-                        <td class="text-center" style="vertical-align: middle;">'. $row["perhitungan"] .'</td>
-                        <td class="text-center" style="vertical-align: middle;">'. $row["frekuensi_sat"] .'</td>
-                        <td class="text-start" style="vertical-align: middle;">&nbsp; Rp. '. formatUangIndonesia($row["harga_satuan"]) .'</td>
-                        <td class="text-start" style="vertical-align: middle;">&nbsp; Rp. '. formatUangIndonesia($row["jml_anggaran"]) .'</td>
-                        <td class="text-center" style="vertical-align: middle;">'. $row["date"] .'</td>
-                        <td class="text-center"><img src="img/'. $row["gambar"] .'" width="50px"></td>
+                        <td>'. $row["nama_barang"] .'</td>
+                        <td>'. $row["type"] .'</td>
+                        <td class="text-end">Rp. '. formatUangIndonesia($row["satuan"]) .'</td>
+                        <td class="text-end">'. $row["jumlah"] .'</td>
+                        <td class="text-end">&nbsp; Rp. '. formatUangIndonesia($row["harga"]) .'</td>
+                        <td class="text-center">'. $row["date"] .'</td>
                     </tr>';
         }
 
-          $html .= '<tr>
-                        <td class="text-center" colspan="9" style="vertical-align: middle;"><b>Jumlah Total</b></td>
-                        <td class="text-center" style="vertical-align: middle;">Rp. '. $format_jumBiaya .'</td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                    </tr>
-        </tbody>
+$html .='</tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="4" class="text-center">Jumlah</th>
+                    <th colspan="1" class="text-end">Rp. '. $format_jumBiaya .'</th>
+                    <th></th>
+                </tr>
+            </tfoot>
     </table>
 </div>
 <!-- Table End -->
@@ -104,18 +68,13 @@ $html = '
 <!-- Information -->
     <div class="informations mt-5">
         <div class="container-information">
-        <h4 class="mb-2">Keterangan</h4>
-            <table border="0">
+        <h4 class="text-dark mb-3">Keterangan</h4>
+            <table>
                 <tbody class="align-top">
                     <tr class="ket">
-                        <td class="ket"><span class="align-top"><b style="color: red;">*</b></span></th>
+                        <td class="ket"><span class="text-dark align-top"><b style="color: red;">*</b></span></td>
                         <td class="ket">&nbsp;</td>
-                        <td class="ket"><span>adalah tanda untuk menentukan hasil kali dari Volume vol (3) dengan Frekuensi vol (5).</span></td>
-                    </tr>
-                    <tr class="ket">
-                        <td class="ket"><span><b style="color: red;">**</b></span></td>
-                        <td class="ket">&nbsp;</td>
-                        <td class="ket"><span>adalah tanda untuk menentukan hasil kali dari Perhitungan (7) dengan Harga satuan (9).</span></td>
+                        <td class="ket"><span class="text-dark">adalah tanda untuk menentukan hasil kali dari Satuan dengan Jumlah.</span></td>
                     </tr>
                 </tbody>
             </table>

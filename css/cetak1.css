@@ -15,17 +15,14 @@ table tr {
 }
 
 thead tr {
-    background: #257cc4;
-    border: 1px solid #4f95ce;
+    background: #6c757d;
+    border: 1px solid #dee2e6;
 }
 thead tr th {
-    background: #257cc4;
-    border: 1px solid #4f95ce;
+    background: #6c757d;
+    border: 1px solid #dee2e6;
 }
-thead tr td {
-    background: #257cc4;
-    border: 1px solid #4f95ce;
-}
+
 
 tbody tr td{
     border: 1px solid #dee2e6;

@@ -156,14 +156,15 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
 
             <!-- Table -->
             <div class="table-responsive text-light">
-                <table id="myDataTable" class="table table-hover table-light table-striped table-bordered table-sm" style="width:100%">
-                    <thead class="table-info">
+                <table id="myDataTable" class="table table-hover table-striped table-bordered table-sm" style="width:100%">
+                    <thead class="table-info" >
                         <tr>
                             <th class="text-center">Nama Barang</th>
                             <th class="text-center">Type</th>
                             <th class="text-center">Satuan</th>
                             <th class="text-center">Jumlah</th>
                             <th class="text-center">Harga<span style="color: red;">*</span></th>
+                            <th class="text-center">Date</th>
                             <th class="text-center">Kwitansi</th>
                         </tr>
                     </thead>
@@ -176,6 +177,7 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
                                 <td class="text-end"><?= "Rp. " . number_format($row["satuan"], 0, ',', '.'); ?></td>
                                 <td class="text-end"><?= $row["jumlah"]; ?></td>
                                 <td class="text-end"><?= "Rp. " . number_format($row["harga"], 0, ',', '.'); ?></td>
+                                <td class="text-center"><?= $row["date"]; ?></td>
                                 <td class="text-center"><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#kwitansiModal<?php echo $row['id']; ?>">Lihat</button></td>
                             </tr>
 
@@ -203,7 +205,7 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="4" class="text-center">Jumlah</th>
+                            <th colspan="5" class="text-center">Jumlah</th>
                             <th colspan="1" class="text-end">Rp. <?= $format_jumBiaya; ?></th>
                             <th></th>
                         </tr>
@@ -226,7 +228,7 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
                     <table>
                         <tbody class="align-top">
                             <tr>
-                                <td><span class="text-light align-top"><b style="color: red;">*</b></span></th>
+                                <td><span class="text-light align-top"><b style="color: red;">*</b></span></td>
                                 <td>&nbsp;</td>
                                 <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Satuan dengan Jumlah.</span></td>
                             </tr>
