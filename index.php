@@ -163,7 +163,7 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
                             <th class="text-center">Type</th>
                             <th class="text-center">Satuan</th>
                             <th class="text-center">Jumlah</th>
-                            <th class="text-center">Harga</th>
+                            <th class="text-center">Harga<span style="color: red;">*</span></th>
                             <th class="text-center">Kwitansi</th>
                         </tr>
                     </thead>
@@ -228,17 +228,7 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
                             <tr>
                                 <td><span class="text-light align-top"><b style="color: red;">*</b></span></th>
                                 <td>&nbsp;</td>
-                                <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Volume vol (3) dengan Frekuensi vol (5).</span></td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td><span class="text-light"><b style="color: red;">**</b></span></td>
-                                <td>&nbsp;</td>
-                                <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Perhitungan (7) dengan Harga satuan (9).</span></td>
+                                <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Satuan dengan Jumlah.</span></td>
                             </tr>
                         </tbody>
                     </table>

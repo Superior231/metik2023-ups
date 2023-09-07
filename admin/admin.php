@@ -541,7 +541,7 @@ if (isset($_POST["edit_gallery_btn"])) {
                             <th class="text-center">Type</th>
                             <th class="text-center">Satuan</th>
                             <th class="text-center">Jumlah</th>
-                            <th class="text-center">Harga</th>
+                            <th class="text-center">Harga<span style="color: red;">*</span></th>
                             <th class="text-center">Kwitansi</th>
                         </tr>
                     </thead>
@@ -594,71 +594,71 @@ if (isset($_POST["edit_gallery_btn"])) {
 
             <!-- Modal Edit Data Pembayaran -->
             <?php foreach ($anggaran as $row) : ?>
-            <form action="admin.php" method="post" enctype="multipart/form-data">
-                <div class="modal fade" id="editModal<?php echo $row['id']; ?>" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content text-dark">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-
-                            <div class="modal-body">
-                                <input type="hidden" name="id" value="<?= $row['id']; ?>">
-                                <input type="hidden" name="gambarLama" value="<?= $row['gambar']; ?>">
-
-                                <label for="gambar" class="">Bukti pembayaran</label>
-                                <div class="input-group flex-nowrap">
-                                    <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="Username" aria-describedby="addon-wrapping">
+                <form action="admin.php" method="post" enctype="multipart/form-data">
+                    <div class="modal fade" id="editModal<?php echo $row['id']; ?>" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content text-dark">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
 
-                                <label for="type" class="mt-2">Type</label>
-                                <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-star icon"></i></span>
-                                    <select class="form-select" aria-label="Default select example" name="type" id="type" required>
-                                        <option selected value="<?= $row['type']; ?>">Select type</option>
-                                        <option value="Sekertaris">Sekertaris</option>
-                                        <option value="Acara">Acara</option>
-                                        <option value="Konsumsi">Konsumsi</option>
-                                        <option value="Perkap">Perkap</option>
-                                        <option value="Lain - lain">Lain - lain</option>
-                                    </select>
+                                <div class="modal-body">
+                                    <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                                    <input type="hidden" name="gambarLama" value="<?= $row['gambar']; ?>">
+
+                                    <label for="gambar" class="">Bukti pembayaran</label>
+                                    <div class="input-group flex-nowrap">
+                                        <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="Username" aria-describedby="addon-wrapping">
+                                    </div>
+
+                                    <label for="type" class="mt-2">Type</label>
+                                    <div class="input-group flex-nowrap">
+                                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-star icon"></i></span>
+                                        <select class="form-select" aria-label="Default select example" name="type" id="type" required>
+                                            <option selected value="<?= $row['type']; ?>">Select type</option>
+                                            <option value="Sekertaris">Sekertaris</option>
+                                            <option value="Acara">Acara</option>
+                                            <option value="Konsumsi">Konsumsi</option>
+                                            <option value="Perkap">Perkap</option>
+                                            <option value="Lain - lain">Lain - lain</option>
+                                        </select>
+                                    </div>
+
+                                    <label for="nama_barang" class="mt-2">Nama Barang</label>
+                                    <div class="input-group flex-nowrap">
+                                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                        <input type="text" name="nama_barang" id="nama_barang" class="form-control" placeholder="Nama belanja" aria-label="nama_barang" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["nama_barang"]; ?>">
+                                    </div>
+
+                                    <label for="satuan" class="mt-2">Satuan</label>
+                                    <div class="input-group flex-nowrap">
+                                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                        <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Nama belanja" aria-label="satuan" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["satuan"]; ?>">
+                                    </div>
+
+                                    <label for="jumlah" class="mt-2">Jumlah</label>
+                                    <div class="input-group flex-nowrap">
+                                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                        <input type="text" name="jumlah" id="jumlah" class="form-control" placeholder="Nama belanja" aria-label="jumlah" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["jumlah"]; ?>">
+                                    </div>
+
+                                    <label for="date" class="mt-2">Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-clock"></i></span>
+                                        <input type="date" name="date" id="date" class="form-control" aria-label="date" aria-describedby="addon-wrapping" value="<?= $row["date"]; ?>">
+                                    </div>
+
                                 </div>
 
-                                <label for="nama_barang" class="mt-2">Nama Barang</label>
-                                <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
-                                    <input type="text" name="nama_barang" id="nama_barang" class="form-control" placeholder="Nama belanja" aria-label="nama_barang" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["nama_barang"]; ?>">
+                                <div class="modal-footer">
+                                    <button type="submit" name="edit_anggaran_btn" id="edit_anggaran_btn" class="btn btn-primary btn-edit">Edit data</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div>
-
-                                <label for="satuan" class="mt-2">Satuan</label>
-                                <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
-                                    <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Nama belanja" aria-label="satuan" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["satuan"]; ?>">
-                                </div>
-
-                                <label for="jumlah" class="mt-2">Jumlah</label>
-                                <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
-                                    <input type="text" name="jumlah" id="jumlah" class="form-control" placeholder="Nama belanja" aria-label="jumlah" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["jumlah"]; ?>">
-                                </div>
-
-                                <label for="date" class="mt-2">Date</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-clock"></i></span>
-                                    <input type="date" name="date" id="date" class="form-control" aria-label="date" aria-describedby="addon-wrapping" value="<?= $row["date"]; ?>">
-                                </div>
-
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" name="edit_anggaran_btn" id="edit_anggaran_btn" class="btn btn-primary btn-edit">Edit data</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
             <?php endforeach; ?>
             <!-- Modal Edit Data Pembayaran End -->
             <!-- Table End -->
@@ -681,17 +681,7 @@ if (isset($_POST["edit_gallery_btn"])) {
                             <tr>
                                 <td><span class="text-light align-top"><b style="color: red;">*</b></span></th>
                                 <td>&nbsp;</td>
-                                <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Volume vol (3) dengan Frekuensi vol (5).</span></td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td><span class="text-light"><b style="color: red;">**</b></span></td>
-                                <td>&nbsp;</td>
-                                <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Perhitungan (7) dengan Harga satuan (9).</span></td>
+                                <td><span class="text-light">adalah tanda untuk menentukan hasil kali dari Satuan dengan Jumlah.</span></td>
                             </tr>
                         </tbody>
                     </table>
