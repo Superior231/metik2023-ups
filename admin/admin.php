@@ -514,6 +514,7 @@ if (isset($_POST["search_btn"])) {
                                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-star icon"></i></span>
                                     <select class="form-select" aria-label="Default select example" name="type" id="type" required>
                                         <option selected>Select type</option>
+                                        <option value="Sekertaris">Sekertaris</option>
                                         <option value="Acara">Acara</option>
                                         <option value="Konsumsi">Konsumsi</option>
                                         <option value="Perkap">Perkap</option>
@@ -662,6 +663,7 @@ if (isset($_POST["search_btn"])) {
                                                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-star icon"></i></span>
                                                     <select class="form-select" aria-label="Default select example" name="type" id="type" required>
                                                         <option selected value="<?= $row['type']; ?>">Select type</option>
+                                                        <option value="Sekertaris">Sekertaris</option>
                                                         <option value="Acara">Acara</option>
                                                         <option value="Konsumsi">Konsumsi</option>
                                                         <option value="Perkap">Perkap</option>
@@ -850,8 +852,6 @@ if (isset($_POST["search_btn"])) {
                 <div class="col col-lg-2 col-md-12 col-sm-6">
                     <h4 style="width: min-content;">Contacts</h4>
                     <ul>
-                        <li><a href="https://www.instagram.com/ftikpancasakti/" target="_blank"><i class="fa-brands fa-instagram me-2"></i>ftikpancasakti</a></li>
-                        <li><a href="https://www.instagram.com/bemftikupstegal/" target="_blank"><i class="fa-brands fa-instagram me-2"></i>bemftikupstegal</a></li>
                         <li><a href="#">Help / FAQ</a></li>
                     </ul>
                 </div>
