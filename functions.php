@@ -115,26 +115,24 @@ function login(){
 
 
 // Riwayat Pembayaran
-function riwayat()
-{
+function riwayat() {
     global $db;
-    $riwayat_pembayaran = mysqli_query($db, "SELECT * FROM riwayat_pembayaran");
+    $anggaran = mysqli_query($db, "SELECT * FROM anggaran");
 
     // mysqli_fetch_row()    -> Mengembalikan Nilai Numerik | Angka
     // mysqli_fetch_assoc()  -> Mengembalikan Array Associative | String
     // mysqli_fetch_array()  -> Mengembalikan 2 Nilai Yaitu Nilai Assoc dan Numerik | menampilkan datanya dobble
     // mysqli_fetch_object() -> Mengembalikan Nilai Object
 
-    $row = mysqli_fetch_assoc($riwayat_pembayaran);
+    $row = mysqli_fetch_assoc($anggaran);
 }
 
 
-function query($riwayat)
-{
+function query($riwayat) {
     global $db;
-    $riwayat_pembayaran = mysqli_query($db, $riwayat);
+    $anggaran = mysqli_query($db, $riwayat);
     $rows = [];
-    while ($row = mysqli_fetch_assoc($riwayat_pembayaran)) {
+    while ($row = mysqli_fetch_assoc($anggaran)) {
         $rows[] = $row;
     }
     return $rows;
@@ -143,7 +141,7 @@ function query($riwayat)
 
 
 // Menghitung total biaya
-$query = "SELECT * FROM riwayat_pembayaran";
+$query = "SELECT * FROM anggaran";
 $result = mysqli_query($db, $query);
 
 // Inisialisasi total biaya
@@ -154,7 +152,7 @@ $jmlTotalBiaya = 0;
 while ($row = mysqli_fetch_assoc($result)) {
 
     // Hitung total biaya keseluruhan
-    $jumBiaya = $row["jml_anggaran"];
+    $jumBiaya = $row["harga"];
     $jmlTotalBiaya += $jumBiaya;
 
     // Format uang
@@ -170,31 +168,25 @@ function tambah($data) {
     global $db;
 
     // htmlspecialchars supaya artibut html tidak jalan di input user
-    $type           = htmlspecialchars($data["type"]);
-    $jenis_belanja  = htmlspecialchars($data["jenis_belanja"]);
-    $volume_vol     = htmlspecialchars($data["volume_vol"]);
-    $volume_sat     = htmlspecialchars($data["volume_sat"]);
-    $frekuensi_vol  = htmlspecialchars($data["frekuensi_vol"]);
-    $frekuensi_sat  = htmlspecialchars($data["frekuensi_sat"]);
-    $harga_satuan   = htmlspecialchars($data["harga_satuan"]);
-    $date           = htmlspecialchars($data["date"]);
-
-    $perhitungan = $frekuensi_vol * $volume_vol;
-    $anggaran = $perhitungan * $harga_satuan;
+    $type 		 = htmlspecialchars($data["type"]);
+    $nama_barang = htmlspecialchars($data["nama_barang"]);
+    $satuan      = htmlspecialchars($data["satuan"]);
+    $jumlah      = htmlspecialchars($data["jumlah"]);
+    $date        = htmlspecialchars($data["date"]);
+    $harga       = $satuan * $jumlah;
 
 	// Cek apakah admin upload gambar / tidak
 	if( $_FILES['gambar']['error'] === 4 ) {
-		// INSERT INTO fungsinya buat nambah data
-		$query = "INSERT INTO riwayat_pembayaran
-				  VALUES ('', '$type', '$jenis_belanja', '$volume_vol', '$volume_sat', '$frekuensi_vol', '$frekuensi_sat', '$perhitungan', '$volume_sat', '$harga_satuan', '$anggaran', '$date', 'kwitansi.jpg')";
+		$query = "INSERT INTO anggaran
+				  VALUES ('', '$type', '$nama_barang', '$satuan', '$jumlah', '$harga', '$date', 'kwitansi.jpg')";
 	
 		mysqli_query($db, $query);
 		return mysqli_affected_rows($db);
 	} else {
 		$gambar = upload();
 
-		$query = "INSERT INTO riwayat_pembayaran
-				  VALUES ('', '$type', '$jenis_belanja', '$volume_vol', '$volume_sat', '$frekuensi_vol', '$frekuensi_sat', '$perhitungan', '$volume_sat', '$harga_satuan', '$anggaran', '$date', '$gambar')";
+		$query = "INSERT INTO anggaran
+				  VALUES ('', '$type', '$nama_barang', '$satuan', '$jumlah', '$harga', '$date', '$gambar')";
 	
 		mysqli_query($db, $query);
 		return mysqli_affected_rows($db);
@@ -250,13 +242,13 @@ function upload() {
 // Hapus data Anggaran
 function hapus($id) {
     global $db;
-    $query = "SELECT gambar FROM riwayat_pembayaran WHERE id = $id";
+    $query = "SELECT gambar FROM anggaran WHERE id = $id";
 	$result = mysqli_query($db, $query);
 	$row = mysqli_fetch_assoc($result);
 	$gambarPath = '../img/' . $row['gambar'];
 
 	// hapus data berdasarkan id
-	$hapus = "DELETE FROM riwayat_pembayaran WHERE id = $id";
+	$hapus = "DELETE FROM anggaran WHERE id = $id";
     mysqli_query($db, $hapus);
 
 	// Menghapus file fisik jika ada
@@ -273,23 +265,19 @@ function hapus($id) {
 
 
 // Edit data Anggaran
-function edit($data) {
+function editAnggaran($data) {
     global $db;
 
     // htmlspecialchars supaya artibut html tidak jalan di input user
-	$id             = $data["id"];
-    $type           = htmlspecialchars($data["type"]);
-    $jenis_belanja  = htmlspecialchars($data["jenis_belanja"]);
-    $volume_vol     = htmlspecialchars($data["volume_vol"]);
-    $volume_sat     = htmlspecialchars($data["volume_sat"]);
-    $frekuensi_vol  = htmlspecialchars($data["frekuensi_vol"]);
-    $frekuensi_sat  = htmlspecialchars($data["frekuensi_sat"]);
-    $harga_satuan   = htmlspecialchars($data["harga_satuan"]);
-    $date           = htmlspecialchars($data["date"]);
-	$gambarLama     = htmlspecialchars($data["gambarLama"]);
-
-    $perhitungan = $frekuensi_vol * $volume_vol;
-    $anggaran = $perhitungan * $harga_satuan;
+	$id          = $data["id"];
+	$type 		 = htmlspecialchars($data["type"]);
+	$nama_barang = htmlspecialchars($data["nama_barang"]);
+    $satuan      = htmlspecialchars($data["satuan"]);
+    $jumlah      = htmlspecialchars($data["jumlah"]);
+    $date        = htmlspecialchars($data["date"]);
+	$gambarLama  = htmlspecialchars($data["gambarLama"]);
+	
+    $harga       = $satuan * $jumlah;
 
 	// Cek apakah user pilih gambar baru atau tidak || 4 = user tidak upload gambar baru
 	if( $_FILES['gambar']['error'] === 4 ) {
@@ -298,20 +286,15 @@ function edit($data) {
 		$gambar = upload();
 	}
 
-
-    $query = "UPDATE riwayat_pembayaran SET
-				type 	      = '$type',
-				jenis_belanja = '$jenis_belanja',
-				volume_vol 	  = '$volume_vol',
-				volume_sat    = '$volume_sat',
-                frekuensi_vol = '$frekuensi_vol',
-                frekuensi_sat = '$frekuensi_sat',
-                perhitungan   = '$perhitungan',
-                harga_satuan  = '$harga_satuan',
-                jml_anggaran  = '$anggaran',
-                date          = '$date',
-				gambar        = '$gambar'
-			  WHERE id 	= $id
+    $query = "UPDATE anggaran SET
+				type        = '$type',
+				nama_barang = '$nama_barang',
+				satuan      = '$satuan',
+				jumlah      = '$jumlah',
+				harga       = '$harga',
+                date        = '$date',
+                gambar      = '$gambar'
+			  WHERE id = $id
 			";
 
     mysqli_query($db, $query);
@@ -319,17 +302,3 @@ function edit($data) {
     return mysqli_affected_rows($db);
 }
 // Edit data Anggaran End
-
-
-// Search Data Anggaran
-function search($keyword) {
-	$query = "SELECT * FROM riwayat_pembayaran
-				WHERE
-			  type LIKE '%$keyword%' OR
-			  jenis_belanja LIKE '%$keyword%' OR
-			  date LIKE '%$keyword%' OR
-			  sat LIKE '%$keyword%'
-			";
-	return query($query);
-}
-// Search Data Anggaran End

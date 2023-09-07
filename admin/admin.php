@@ -9,7 +9,7 @@ if (!isAdmin()) {
 }
 
 
-$riwayat_pembayaran = mysqli_query($db, "SELECT * FROM riwayat_pembayaran");
+$anggaran = mysqli_query($db, "SELECT * FROM anggaran");
 $isi_contents = mysqli_query($db, "SELECT * FROM judul");
 $gallery = mysqli_query($db, "SELECT * FROM gallery");
 
@@ -57,9 +57,9 @@ if (isset($_POST["tambahGallery_btn"])) {
 
 
 // Cek apakah tombol edit sudah ditekan atau belum
-if (isset($_POST["edit_btn"])) {
+if (isset($_POST["edit_anggaran_btn"])) {
     // Cek apakah data berhasil diubah atau tidak
-    if (edit($_POST) > 0) {
+    if (editAnggaran($_POST) > 0) {
         echo "
           <script>
               alert('Data berhasil diubah');
@@ -140,25 +140,6 @@ if (isset($_POST["edit_gallery_btn"])) {
 }
 
 
-// PAGINATION
-$jumlahDataPerHalaman = 10;
-
-$jumlahData = count(query("SELECT * FROM riwayat_pembayaran"));
-
-$jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
-
-$page = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
-$awalData = ($jumlahDataPerHalaman * $page) - $jumlahDataPerHalaman;
-
-
-$riwayat_pembayaran = query("SELECT * FROM riwayat_pembayaran LIMIT $awalData, $jumlahDataPerHalaman");
-// PAGINATION END
-
-
-// Tombol search ditekan
-if (isset($_POST["search_btn"])) {
-    $riwayat_pembayaran = search($_POST["keyword"]);
-}
 
 ?>
 
@@ -168,13 +149,16 @@ if (isset($_POST["search_btn"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style2.css">
+    <link rel="stylesheet" href="../css/style3.css">
     <!-- BS 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Datatables -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <title>METIK 2023 - Universitas Pancasakti Tegal</title>
 </head>
 
@@ -475,20 +459,8 @@ if (isset($_POST["search_btn"])) {
 
             <!-- Actions -->
             <div class="actions mb-2">
-
                 <button type="button" style="background: transparent; border-color: transparent;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-square-plus fa-2x text-light"></i></button>
                 <a href="admin.php"><button type="button" style="background: transparent; border-color: transparent;"><i class="fa-solid fa-rotate-right fa-2x text-light"></i></button></a>
-
-                <!-- Search -->
-                <form action="" method="post" class="search mx-0 ms-auto">
-                    <div class="input-group">
-                        <input class="form-control" type="search" name="keyword" placeholder="Search" autocomplete="off">
-                        <div class="search-button">
-                            <button type="submit" name="search_btn"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-                <!-- Search End -->
             </div>
             <!-- Actions End -->
 
@@ -522,34 +494,22 @@ if (isset($_POST["search_btn"])) {
                                     </select>
                                 </div>
 
-                                <label for="jenis_belanja" class="mt-2">Nama Belanja</label>
+                                <label for="nama_barang" class="mt-2">Nama Barang</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
-                                    <input type="text" name="jenis_belanja" id="jenis_belanja" class="form-control" placeholder="Nama belanja" aria-label="jenis_belanja" aria-describedby="addon-wrapping" autocomplete="off" required>
+                                    <input type="text" name="nama_barang" id="nama_barang" class="form-control" placeholder="Nama Barang" aria-label="nama_barang" aria-describedby="addon-wrapping" autocomplete="off" required>
                                 </div>
 
-                                <label for="harga_satuan" class="mt-2">Harga satuan</label>
+                                <label for="satuan" class="mt-2">Harga Satuan</label>
                                 <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-sack-dollar"></i></span>
-                                    <input type="text" name="harga_satuan" id="harga_satuan" class="form-control" placeholder="Rp. " aria-label="harga_satuan" aria-describedby="addon-wrapping" autocomplete="off" required>
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                    <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Satuan" aria-label="satuan" aria-describedby="addon-wrapping" autocomplete="off" required>
                                 </div>
 
-                                <label for="volume_vol" class="mt-2">Volume</label>
-                                <div class="input-group flex">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-list-ol"></i></span>
-                                    <input type="text" name="volume_vol" id="volume_vol" class="form-control me-2" placeholder="Vol : 1, 2, 3,..." aria-label="volume_vol" aria-describedby="addon-wrapping" autocomplete="off" required>
-
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-box-open"></i></span>
-                                    <input type="text" name="volume_sat" id="volume_sat" class="form-control" placeholder="Satuan : Lembar, Box, Buah" aria-label="volume_sat" aria-describedby="addon-wrapping" autocomplete="off" required>
-                                </div>
-
-                                <label for="frekuensi_vol" class="mt-2">Frekuensi</label>
-                                <div class="input-group flex">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-chart-line"></i></span>
-                                    <input type="text" name="frekuensi_vol" id="frekuensi_vol" class="form-control me-2" placeholder="Vol : 1, 2, 3,..." aria-label="frekuensi_vol" aria-describedby="addon-wrapping" autocomplete="off" required>
-
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-scroll"></i></span>
-                                    <input type="text" name="frekuensi_sat" id="frekuensi_sat" class="form-control" placeholder="Satuan : Kali, Kegiatan" aria-label="frekuensi_sat" aria-describedby="addon-wrapping" autocomplete="off" required>
+                                <label for="jumlah" class="mt-2">Jumlah</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                    <input type="text" name="jumlah" id="jumlah" class="form-control" placeholder="Jumlah" aria-label="jumlah" aria-describedby="addon-wrapping" autocomplete="off" required>
                                 </div>
 
                                 <label for="date" class="mt-2">Date</label>
@@ -572,157 +532,38 @@ if (isset($_POST["search_btn"])) {
 
 
             <!-- Table -->
-            <div class="table-responsive">
-                <table class="table table-hover table-striped bg-light table-bordered table-sm">
-                    <thead class="table-color">
+            <div class="table-responsive text-light">
+                <table id="myDataTable" class="table table-hover table-striped table-bordered table-sm" style="width:100%">
+                    <thead class="table-info">
                         <tr>
-                            <th class="text-center" rowspan="4" style="vertical-align: middle;">Actions</th>
-                            <th class="text-center" rowspan="2" style="vertical-align: middle;">Jenis Belanja</th>
-                            <th class="text-center" rowspan="2" style="vertical-align: middle;">Type</th>
-                            <th class="text-center" colspan="7">Rincian Biaya</th>
-                            <th class="text-center" rowspan="2" style="vertical-align: middle;">Jumlah Anggaran</th>
-                            <th class="text-center" rowspan="4" style="vertical-align: middle;">Update at</th>
-                            <th class="text-center" rowspan="4" style="vertical-align: middle;">Kwitansi</th>
-                        </tr>
-                        <tr>
-                            <th class="text-center" style="vertical-align: middle;" colspan="2">Volume</th>
-                            <th class="text-center" style="vertical-align: middle;" colspan="2">Frekuensi</th>
-                            <th class="text-center" style="vertical-align: middle;">Perhitungan</th>
-                            <th class="text-center" style="vertical-align: middle;">Sat</th>
-                            <th class="text-center" style="vertical-align: middle;">Harga Satuan</th>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center">3</td>
-                            <td class="text-center">4</td>
-                            <td class="text-center">5</td>
-                            <td class="text-center">6</td>
-                            <td class="text-center">7<b style="color: red;">*</b></td>
-                            <td class="text-center">8</td>
-                            <td class="text-center">9</td>
-                            <td class="text-center">10<b style="color: red;">**</b></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center">Vol</td>
-                            <td class="text-center">Sat</td>
-                            <td class="text-center">Vol</td>
-                            <td class="text-center">Sat</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
+                            <th class="text-center">Actions</th>
+                            <th class="text-center">Nama Barang</th>
+                            <th class="text-center">Type</th>
+                            <th class="text-center">Satuan</th>
+                            <th class="text-center">Jumlah</th>
+                            <th class="text-center">Harga</th>
+                            <th class="text-center">Kwitansi</th>
                         </tr>
                     </thead>
-
-                    <tbody class="align-middle">
+                    <tbody>
                         <?php $i = 1; ?>
-                        <?php foreach ($riwayat_pembayaran as $row) : ?>
+                        <?php foreach ($anggaran as $row) : ?>
                             <tr>
-                                <td class="text-center">
-                                    <button style="border-color: transparent;" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $row['id']; ?>"><i class="fa fa-pencil"></i></button> |
+                                <td class="text-center"><button style="border-color: transparent;" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $row['id']; ?>"><i class="fa fa-pencil"></i></button> |
                                     <a href="anggaranhapus.php?id=<?= $row["id"]; ?>" class="link" onclick="return confirm('Apakah Anda yakin untuk menghapusnya?');"><i class="fa-solid fa-trash"></i></a>
                                 </td>
-                                <td class="text-center"><?= $row["jenis_belanja"]; ?></td>
-                                <td class="text-center"><?= $row["type"]; ?></td>
-                                <td class="text-center"><?= $row["volume_vol"]; ?></td>
-                                <td class="text-center"><?= $row["volume_sat"]; ?></td>
-                                <td class="text-center"><?= $row["frekuensi_vol"]; ?></td>
-                                <td class="text-center"><?= $row["frekuensi_sat"]; ?></td>
-                                <td class="text-center"><?= $row["perhitungan"]; ?></td>
-                                <td class="text-center"><?= $row["volume_sat"]; ?></td>
-                                <td class="text-start">&nbsp; <?= "Rp. " . number_format($row["harga_satuan"], 0, ',', '.'); ?></td>
-                                <td class="text-start">&nbsp; <?= "Rp. " . number_format($row["jml_anggaran"], 0, ',', '.'); ?></td>
-                                <td class="text-center"><?= $row["date"]; ?></td>
+                                <td><?= $row["nama_barang"]; ?></td>
+                                <td><?= $row["type"]; ?></td>
+                                <td class="text-end"><?= "Rp. " . number_format($row["satuan"], 0, ',', '.'); ?></td>
+                                <td class="text-end"><?= $row["jumlah"]; ?></td>
+                                <td class="text-end"><?= "Rp. " . number_format($row["harga"], 0, ',', '.'); ?></td>
                                 <td class="text-center"><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#kwitansiModal<?php echo $row['id']; ?>">Lihat</button></td>
                             </tr>
-
-                            <!-- Modal Edit Data Pembayaran -->
-                            <form action="admin.php" method="post" enctype="multipart/form-data">
-                                <div class="modal fade" id="editModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <input type="hidden" name="id" value="<?= $row['id']; ?>">
-                                                <input type="hidden" name="gambarLama" value="<?= $row['gambar']; ?>">
-
-                                                <label for="gambar" class="">Bukti pembayaran</label>
-                                                <div class="input-group flex-nowrap">
-                                                    <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="Username" aria-describedby="addon-wrapping">
-                                                </div>
-
-                                                <label for="type" class="mt-2">Type</label>
-                                                <div class="input-group flex-nowrap">
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-star icon"></i></span>
-                                                    <select class="form-select" aria-label="Default select example" name="type" id="type" required>
-                                                        <option selected value="<?= $row['type']; ?>">Select type</option>
-                                                        <option value="Sekertaris">Sekertaris</option>
-                                                        <option value="Acara">Acara</option>
-                                                        <option value="Konsumsi">Konsumsi</option>
-                                                        <option value="Perkap">Perkap</option>
-                                                        <option value="Lain - lain">Lain - lain</option>
-                                                    </select>
-                                                </div>
-
-                                                <label for="jenis_belanja" class="mt-2">Nama Belanja</label>
-                                                <div class="input-group flex-nowrap">
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
-                                                    <input type="text" name="jenis_belanja" id="jenis_belanja" class="form-control" placeholder="Nama belanja" aria-label="jenis_belanja" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["jenis_belanja"]; ?>">
-                                                </div>
-
-                                                <label for="harga_satuan" class="mt-2">Harga satuan</label>
-                                                <div class="input-group flex-nowrap">
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-sack-dollar"></i></span>
-                                                    <input type="text" name="harga_satuan" id="harga_satuan" class="form-control" placeholder="Rp. " aria-label="harga_satuan" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["harga_satuan"]; ?>">
-                                                </div>
-
-                                                <label for="volume_vol" class="mt-2">Volume</label>
-                                                <div class="input-group flex">
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-list-ol"></i></span>
-                                                    <input type="text" name="volume_vol" id="volume_vol" class="form-control me-2" placeholder="Vol : 1, 2, 3,..." aria-label="volume_vol" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["volume_vol"]; ?>">
-
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-box-open"></i></span>
-                                                    <input type="text" name="volume_sat" id="volume_sat" class="form-control" placeholder="Satuan : Lembar, Box, Buah" aria-label="volume_sat" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["volume_sat"]; ?>">
-                                                </div>
-
-                                                <label for="frekuensi_vol" class="mt-2">Frekuensi</label>
-                                                <div class="input-group flex">
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-chart-line"></i></span>
-                                                    <input type="text" name="frekuensi_vol" id="frekuensi_vol" class="form-control me-2" placeholder="Vol : 1, 2, 3,..." aria-label="frekuensi_vol" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["frekuensi_vol"]; ?>">
-
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-scroll"></i></span>
-                                                    <input type="text" name="frekuensi_sat" id="frekuensi_sat" class="form-control" placeholder="Satuan : Kali, Kegiatan" aria-label="frekuensi_sat" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["frekuensi_sat"]; ?>">
-                                                </div>
-
-                                                <label for="date" class="mt-2">Date</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-clock"></i></span>
-                                                    <input type="date" name="date" id="date" class="form-control" aria-label="date" aria-describedby="addon-wrapping" value="<?= $row["date"]; ?>">
-                                                </div>
-
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="submit" name="edit_btn" class="btn btn-primary btn-edit">Edit data</button>
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <!-- Modal Edit Data Pembayaran End -->
 
                             <!-- Modal Bukti Pembayaran -->
                             <div class="modal fade" id="kwitansiModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
-                                    <div class="modal-content">
+                                    <div class="modal-content text-dark">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -738,55 +579,96 @@ if (isset($_POST["search_btn"])) {
                                 </div>
                             </div>
                             <!-- Modal Bukti Pembayaran End -->
+                            <?php $i++; ?>
                         <?php endforeach; ?>
-                        <?php $i++; ?>
-                        <tr>
-                            <td class="text-center" colspan="10"><b>Jumlah Total</b></td>
-                            <td class="text-center">Rp. <?= $format_jumBiaya; ?></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                        </tr>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5" class="text-center">Jumlah</th>
+                            <th colspan="1" class="text-end">Rp. <?= $format_jumBiaya; ?></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
+
+            <!-- Modal Edit Data Pembayaran -->
+            <?php foreach ($anggaran as $row) : ?>
+            <form action="admin.php" method="post" enctype="multipart/form-data">
+                <div class="modal fade" id="editModal<?php echo $row['id']; ?>" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content text-dark">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                                <input type="hidden" name="gambarLama" value="<?= $row['gambar']; ?>">
+
+                                <label for="gambar" class="">Bukti pembayaran</label>
+                                <div class="input-group flex-nowrap">
+                                    <input type="file" accept="image/*" name="gambar" class="form-control" id="gambar" aria-label="Username" aria-describedby="addon-wrapping">
+                                </div>
+
+                                <label for="type" class="mt-2">Type</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-star icon"></i></span>
+                                    <select class="form-select" aria-label="Default select example" name="type" id="type" required>
+                                        <option selected value="<?= $row['type']; ?>">Select type</option>
+                                        <option value="Sekertaris">Sekertaris</option>
+                                        <option value="Acara">Acara</option>
+                                        <option value="Konsumsi">Konsumsi</option>
+                                        <option value="Perkap">Perkap</option>
+                                        <option value="Lain - lain">Lain - lain</option>
+                                    </select>
+                                </div>
+
+                                <label for="nama_barang" class="mt-2">Nama Barang</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                    <input type="text" name="nama_barang" id="nama_barang" class="form-control" placeholder="Nama belanja" aria-label="nama_barang" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["nama_barang"]; ?>">
+                                </div>
+
+                                <label for="satuan" class="mt-2">Satuan</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                    <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Nama belanja" aria-label="satuan" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["satuan"]; ?>">
+                                </div>
+
+                                <label for="jumlah" class="mt-2">Jumlah</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                    <input type="text" name="jumlah" id="jumlah" class="form-control" placeholder="Nama belanja" aria-label="jumlah" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["jumlah"]; ?>">
+                                </div>
+
+                                <label for="date" class="mt-2">Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-clock"></i></span>
+                                    <input type="date" name="date" id="date" class="form-control" aria-label="date" aria-describedby="addon-wrapping" value="<?= $row["date"]; ?>">
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" name="edit_anggaran_btn" id="edit_anggaran_btn" class="btn btn-primary btn-edit">Edit data</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <?php endforeach; ?>
+            <!-- Modal Edit Data Pembayaran End -->
             <!-- Table End -->
 
 
-            <!-- Tombol Pagination -->
-            <div class="pagination gap-1" style="overflow-x: scroll;">
-                <!-- menambah tombol previous -->
-                <?php if ($page > 1) : ?>
-                    <a href="?halaman=<?= $page - 1 ?>"><button type="button" class="btn btn-secondary"><i class="fa-solid fa-angle-left"></i></button></a>
-                <?php endif; ?>
 
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group gap-1" role="group" aria-label="Second group">
-
-                        <!-- Tombol halaman navigasi / pagination -->
-                        <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
-
-                            <!-- untuk mengetahui kita berada di halaman berapa -->
-                            <?php if ($i == $page) : ?>
-                                <a href="?halaman=<?= $i; ?>"><button type="button" class="btn btn-primary" style="width: 38px;"><?= $i; ?></button></a>
-                            <?php else : ?>
-                                <a href="?halaman=<?= $i; ?>"><button type="button" class="btn btn-secondary" style="width: 38px;"><?= $i; ?></button></a>
-                            <?php endif; ?>
-
-                        <?php endfor; ?>
-                        <!-- Tombol halaman navigasi / pagination End -->
-
-                    </div>
-                </div>
-                <!-- menambah tombol next -->
-                <?php if ($page < $jumlahHalaman) : ?>
-                    <a href="?halaman=<?= $page + 1 ?>"><button type="button" class="btn btn-secondary"><i class="fa-solid fa-angle-right"></i></button></a>
-                <?php endif; ?>
-            </div>
-            <!-- Tombol Pagination End -->
 
             <!-- Download file pdf Anggaran -->
-            <div class="download-action">
-                <a href="../cetak_anggaran.php" target="_blank"><button class="btn btn-primary float-end" style="border-radius: 0px;">Download pdf</button></a>
+            <div class="download-action mt-4">
+                <a href="../cetak_anggaran.php" target="_blank"><button class="btn btn-primary" style="border-radius: 0px;">Download pdf</button></a>
             </div>
             <!-- Download file pdf Anggaran End -->
 
@@ -913,6 +795,16 @@ if (isset($_POST["search_btn"])) {
     <script src="../script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+    <!-- Datatables -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#myDataTable').DataTable();
+        });
+    </script>
 
 
 </body>
