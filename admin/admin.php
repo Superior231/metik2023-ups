@@ -672,6 +672,7 @@ if (isset($_POST["edit_gallery_btn"])) {
             <!-- Download file pdf Anggaran -->
             <div class="download-action mt-4">
                 <a href="../cetak_anggaran.php" target="_blank"><button class="btn btn-primary" style="border-radius: 0px;">Download pdf</button></a>
+                <a href="../export_to_excel.php" target="_blank"><button class="btn btn-success" style="border-radius: 0px;">Export to Excel</button></a>
             </div>
             <!-- Download file pdf Anggaran End -->
 
