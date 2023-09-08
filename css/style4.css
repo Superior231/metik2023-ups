@@ -357,46 +357,6 @@
   align-items: center;
   gap: 6px;
 }
-
-/* Search */
-.input-group {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-}
-.input-group input {
-  border-radius: 3px;
-  border: 1px solid #e2e3e4;
-  outline: none;
-}
-.form-control {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 32px;
-}
-input.form-control:focus {
-  box-shadow: 0 0 0 1px #257cc4;
-}
-.search-button button {
-  height: 32px;
-  width: 38px;
-  background: #e2e3e4;
-  line-height: 32px;
-  font-size: 15px;
-  text-align: center;
-  border-radius: 0 3px 3px 0;
-  border: 1px;
-}
-/* Search End */
-
-
-.table-responsive .table-color {
-  background: #257cc4;
-  color: #fff;
-  border-color: #4f95ce;
-}
 /* Anggaran End */
 
 
