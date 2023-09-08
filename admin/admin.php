@@ -149,7 +149,7 @@ if (isset($_POST["edit_gallery_btn"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style4.css">
+    <link rel="stylesheet" href="../css/style5.css">
     <!-- BS 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -502,13 +502,13 @@ if (isset($_POST["edit_gallery_btn"])) {
 
                                 <label for="satuan" class="mt-2">Harga Satuan</label>
                                 <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-sack-dollar"></i></span>
                                     <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Satuan" aria-label="satuan" aria-describedby="addon-wrapping" autocomplete="off" required>
                                 </div>
 
                                 <label for="jumlah" class="mt-2">Jumlah</label>
                                 <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-box-open"></i></span>
                                     <input type="text" name="jumlah" id="jumlah" class="form-control" placeholder="Jumlah" aria-label="jumlah" aria-describedby="addon-wrapping" autocomplete="off" required>
                                 </div>
 
@@ -534,7 +534,7 @@ if (isset($_POST["edit_gallery_btn"])) {
             <!-- Table -->
             <div class="table-responsive text-light">
                 <table id="myDataTable" class="table table-hover table-striped table-bordered table-sm" style="width:100%">
-                    <thead class="table-info">
+                    <thead class="table-colors">
                         <tr>
                             <th class="text-center">Actions</th>
                             <th class="text-center">Nama Barang</th>
@@ -550,8 +550,8 @@ if (isset($_POST["edit_gallery_btn"])) {
                         <?php $i = 1; ?>
                         <?php foreach ($anggaran as $row) : ?>
                             <tr>
-                                <td class="text-center"><button style="border-color: transparent;" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $row['id']; ?>"><i class="fa fa-pencil"></i></button> |
-                                    <a href="anggaranhapus.php?id=<?= $row["id"]; ?>" class="link" onclick="return confirm('Apakah Anda yakin untuk menghapusnya?');"><i class="fa-solid fa-trash"></i></a>
+                                <td class="text-center"><button style="border-color: transparent;" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $row['id']; ?>"><i class="fa fa-pencil text-primary"></i></button> |
+                                    <a href="anggaranhapus.php?id=<?= $row["id"]; ?>" class="link" onclick="return confirm('Apakah Anda yakin untuk menghapusnya?');"><i class="fa-solid fa-trash text-danger"></i></a>
                                 </td>
                                 <td><?= $row["nama_barang"]; ?></td>
                                 <td><?= $row["type"]; ?></td>
@@ -636,13 +636,13 @@ if (isset($_POST["edit_gallery_btn"])) {
 
                                     <label for="satuan" class="mt-2">Satuan</label>
                                     <div class="input-group flex-nowrap">
-                                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-sack-dollar"></i></span>
                                         <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Nama belanja" aria-label="satuan" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["satuan"]; ?>">
                                     </div>
 
                                     <label for="jumlah" class="mt-2">Jumlah</label>
                                     <div class="input-group flex-nowrap">
-                                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-cart-shopping"></i></span>
+                                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-box-open"></i></span>
                                         <input type="text" name="jumlah" id="jumlah" class="form-control" placeholder="Nama belanja" aria-label="jumlah" aria-describedby="addon-wrapping" autocomplete="off" value="<?= $row["jumlah"]; ?>">
                                     </div>
 
