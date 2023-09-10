@@ -710,7 +710,7 @@ if (isset($_POST["edit_gallery_btn"])) {
                         <img src="../assets/logo.png" alt="logo_metik_2023" style="width: 150px;">
                     </div>
 
-                    <p class="text-footer text-light ms-1" style="opacity: 0.4;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam eligendi placeat odio voluptates rem asperiores voluptatibus enim est voluptatem impedit ipsam cupiditate labore sapiente corporis adipisci natus, nemo reiciendis doloremque sequi quos aspernatur! Porro, vel!</p>
+                    <p class="text-footer text-light ms-1" style="opacity: 0.4;">METIK adalah kegiatan untuk mengenal Teknik, yaitu Teknik Mesin, Teknik Industri, Teknik Informatika, Teknik Sipil, dan Sistem Informasi. Tujuan dari kegiatan ini adalah untuk pengenalan kampus, pengenalan Fakultas Teknik dan Ilmu Komputer, dan untuk menjalin ikatan emosional / rasa memiliki Fakultas Teknik dan Ilmu Komputer.</p>
                 </div>
 
                 <div class="col col-lg-2 col-md-1 col-sm-12"></div>
