@@ -289,8 +289,6 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
                 <div class="col col-lg-2 col-md-12 col-sm-6">
                     <h4 style="width: min-content;">Contacts</h4>
                     <ul>
-                        <li><a href="https://www.instagram.com/ftikpancasakti/" target="_blank"><i class="fa-brands fa-instagram me-2"></i>ftikpancasakti</a></li>
-                        <li><a href="https://www.instagram.com/bemftikupstegal/" target="_blank"><i class="fa-brands fa-instagram me-2"></i>bemftikupstegal</a></li>
                         <li><a href="#">Help / FAQ</a></li>
                     </ul>
                 </div>
