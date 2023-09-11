@@ -227,6 +227,14 @@
 .about-subjudul {
   opacity: 0.4;
 }
+.hidden-about {
+  display: none;
+}
+.seeAll {
+  background-color: transparent;
+  border-color: transparent;
+
+}
 /* About End */
 
 /* Gallery */

@@ -52,3 +52,22 @@ toggleBtn.onclick = function() {
 
 // Hamburger Menu End
 // Navbar End
+
+
+// See All
+const toggleButton  = document.getElementById("toggleButtonSeeAll"),
+      hiddenContent = document.querySelector(".hidden-about");
+      SeeContent    = document.querySelector(".about-subjudul-container");
+
+toggleButton.addEventListener("click", function () {
+    if (hiddenContent.style.display === "none" || hiddenContent.style.display === "") {
+        hiddenContent.style.display = "block";
+        SeeContent.style.display = "none";
+        toggleButton.textContent = "Hide";
+    } else {
+        hiddenContent.style.display = "none";
+        SeeContent.style.display= "block";
+        toggleButton.textContent = "See All";
+    }
+});
+// See All End

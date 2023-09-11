@@ -14,7 +14,7 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style5.css">
+    <link rel="stylesheet" href="css/style7.css">
     <!-- BS 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -94,7 +94,21 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
                         </div>
                     </div>
                     <div class="col col-lg-8 col-md-6 col-sm-12">
-                        <p class="about-subjudul"><?= $row['about_subjudul']; ?></p>
+                        <div class="hidden-about">
+                            <p class="about-subjudul"><?= $row['about_subjudul']; ?></p>
+                        </div>
+                        <div class="about-subjudul-container">
+                            <?php
+                            $subjudul = $row['about_subjudul'];
+                            $wordLimit = 40;
+                            if (str_word_count($subjudul) > $wordLimit) {
+                                $subjudul = implode(' ', array_slice(str_word_count($subjudul, 2), 0, $wordLimit)) . ' ...';
+                            }
+                            ?>
+                            <!-- Fungsi implode =>  -->
+                            <p class="about-subjudul"><?= $subjudul; ?></p>
+                        </div>
+                        <button class="seeAll text-light toggle-button" id="toggleButtonSeeAll">See All</button>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -302,7 +316,7 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
 
 
 
-    <script src="script.js"></script>
+    <script src="script2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <!-- Datatables -->
