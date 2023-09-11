@@ -568,7 +568,7 @@ if (isset($_POST["edit_gallery_btn"])) {
                                 <td class="text-center"><button style="border-color: transparent;" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $row['id']; ?>"><i class="fa fa-pencil text-primary"></i></button> |
                                     <a href="anggaranhapus.php?id=<?= $row["id"]; ?>" class="link" onclick="return confirm('Apakah Anda yakin untuk menghapusnya?');"><i class="fa-solid fa-trash text-danger"></i></a>
                                 </td>
-                                <td><?= $row["nama_barang"]; ?></td>
+                                <td class="ps-3"><?= $row["nama_barang"]; ?></td>
                                 <td><?= $row["type"]; ?></td>
                                 <td class="text-end"><?= "Rp. " . number_format($row["satuan"], 0, ',', '.'); ?></td>
                                 <td class="text-end"><?= $row["jumlah"]; ?></td>

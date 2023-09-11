@@ -186,7 +186,7 @@ $gallery = mysqli_query($db, "SELECT * FROM gallery");
                         <?php $i = 1; ?>
                         <?php foreach ($anggaran as $row) : ?>
                             <tr>
-                                <td><?= $row["nama_barang"]; ?></td>
+                                <td class="ps-3"><?= $row["nama_barang"]; ?></td>
                                 <td><?= $row["type"]; ?></td>
                                 <td class="text-end"><?= "Rp. " . number_format($row["satuan"], 0, ',', '.'); ?></td>
                                 <td class="text-end"><?= $row["jumlah"]; ?></td>
