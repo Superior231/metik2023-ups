@@ -4,6 +4,8 @@ Metik adalah kegiatan untuk mengenal Teknik, yaitu Teknik Mesin, Teknik Industri
 
 Website Metik berisi tentang pangertian Metik, Gallery, dan Anggaran kegiatan. Website Metik dilengkapi dengan fitur CRUD untuk membuat, mengedit, dan menghapus konten yang ada di dalam website.
 
+# Preview
+
 - Home
   ![home](assets/1.png)
   
@@ -16,5 +18,6 @@ Website Metik berisi tentang pangertian Metik, Gallery, dan Anggaran kegiatan. W
 - Edit Gallery
   ![home](assets/4.png)
 
+# Version
 
   php version 8.1.6 database mysql
