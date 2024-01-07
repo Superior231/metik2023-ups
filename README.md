@@ -18,7 +18,7 @@ Website Metik berisi tentang pangertian Metik, Gallery, dan Anggaran kegiatan. W
 - Edit Gallery
   ![home](assets/4.png)
 
-  - Edit Content
+- Edit Content
   ![home](assets/5.png)
 
 # Version
